@@ -20,3 +20,15 @@ cache_dir = "./.cache"
 [repl.analysis]
 passes = ["check_checker"]
 check_checker = { trusted_sender = false, trusted_caller = false, callee_filter = false }
+
+[contracts]
+
+[contracts.flowfi-registry]
+path = "contracts/flowfi-registry.clar"
+clarity_version = 5
+epoch = "latest"
+
+[contracts.flowfi-escrow]
+path = "contracts/flowfi-escrow.clar"
+clarity_version = 5
+epoch = "latest"
