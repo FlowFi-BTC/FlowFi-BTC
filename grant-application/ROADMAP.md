@@ -6,7 +6,13 @@ This roadmap describes where FlowFi BTC could go **after** this grant, if the si
 
 ## Phase 1 — This Grant: Single-Counterparty Proof
 
-One verified business, one real sBTC provider, one receivable, resolved on-chain through `registry.clar` and `escrow.clar`. The goal is proving the mechanism works and is honestly disclosed — not scale.
+One verified business, one real sBTC provider, one receivable, resolved on-chain through
+`flowfi-registry` (`register-business` → `verify-business` → `register-receivable`) and
+`flowfi-escrow` (`fund-receivable` → admin `release-funds` → business `repay-receivable` or admin
+`mark-default`). Live starting point: https://flowfi-btc.vercel.app/ + testnet
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` /
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow` (mock sBTC
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`). The goal is proving the mechanism works and is honestly disclosed — not scale.
 
 ---
 
@@ -18,7 +24,7 @@ A small, known set of additional businesses and providers — still not open to 
 
 ## Phase 3 — Pluggable Verification Layer (Future)
 
-Multiple verification sources (manual review, Persona or another KYB provider, business registry attestations, debtor confirmation) recorded through the same on-chain schema already designed in `registry.clar`. Verification remains **required** for receivable registration at every phase — this roadmap does not include removing that gate, only diversifying and strengthening how it's satisfied.
+Multiple verification sources (manual review, Persona or another KYB provider, business registry attestations, debtor confirmation) recorded through the same on-chain schema already implemented in `flowfi-registry` (`method u0–u5`, `level u0–u3`, `buff-32` reference/proof hashes, lazy burn-height expiry). Verification remains **required** for receivable registration at every phase — this roadmap does not include removing that gate, only diversifying and strengthening how it's satisfied.
 
 ---
 

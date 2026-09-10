@@ -24,7 +24,7 @@ FlowFi BTC's escrow-then-release model means:
 
 ### 3. Composable Patterns for Future Builders
 
-FlowFi BTC's two-contract split demonstrates a reusable pattern: a registry contract owning identity/verification/state, restricting financial state transitions to an authorized escrow contract only, which owns money movement exclusively. This mirrors the `tx-sender` vs. `contract-caller` lesson other Stacks protocols (e.g., payment-streaming projects) have already had to solve, applied to a different financial primitive.
+FlowFi BTC's two-contract split demonstrates a reusable pattern: `flowfi-registry` owning identity/verification/state and restricting financial transitions to the wired escrow via `contract-caller`, while `flowfi-escrow` owns money movement exclusively (exact `fund → admin-release → business-repay / admin-default` flow, SIP-010 structural trait, wrong-token and self-funding guards). This mirrors the `tx-sender` vs. `contract-caller` lesson other Stacks protocols (e.g., payment-streaming projects) have already had to solve, applied to a different financial primitive. Live reference: https://flowfi-btc.vercel.app/ against testnet `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` + `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow` (mock sBTC `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`).
 
 | Pattern | Description | Reuse Potential |
 |---|---|---|
@@ -41,10 +41,10 @@ FlowFi BTC's two-contract split demonstrates a reusable pattern: a registry cont
 
 | Metric | Target | Measurement |
 |---|---|---|
-| Smart contracts on mainnet | 2 contracts (`registry.clar`, `escrow.clar`) | Stacks Explorer |
-| Open-source Clarity code | Full contract source + tests | GitHub repository |
+| Smart contracts on mainnet | 2 contracts (`flowfi-registry`, `flowfi-escrow`; testnet already live at `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.*`) | Stacks Explorer |
+| Open-source Clarity code | Full contract source (Clarity 5) + tests + mock token | GitHub repository |
 | Test coverage | 40–60 tests + 2 integration tests | CI/test output |
-| Completed real financing cycle | 1 (registration through resolution) | On-chain transaction history + `PILOT_RESULT.md` |
+| Completed real financing cycle | 1 (OPEN → FUNDED → REPAID or DEFAULTED, via `fund-receivable` → `release-funds` → `repay-receivable` / `mark-default`) | On-chain transaction history + `PILOT_RESULT.md` |
 | Documentation | Complete, honest risk disclosure and technical architecture | Published docs |
 
 ### Medium-Term Impact (Post-Grant, If Pilot Succeeds)

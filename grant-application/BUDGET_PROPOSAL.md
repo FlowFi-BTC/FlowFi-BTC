@@ -16,8 +16,8 @@ This budget funds hardening a designed protocol, deploying it to mainnet, and ex
 
 | Line Item | Amount | Description |
 |---|---|---|
-| Contract development & hardening (`registry.clar` + `escrow.clar`) | $900 | Finalizing both contracts per the architecture in `TECHNICAL_ARCHITECTURE.md` |
-| Test suite development | $600 | 40–60 tests across both contracts plus two integration tests |
+| Contract development & hardening (`flowfi-registry` + `flowfi-escrow` ) | $900 | Finalizing implemented v1.0.0 contracts per the code-verified `TECHNICAL_ARCHITECTURE.md` (burn-height dates, `contract-caller` gates, SIP-010 guards) |
+| Test suite development | $600 | 40–60 tests across both contracts plus two integration tests (placeholders exist; suite lands in M1) |
 | Verification path integration | $500 | Either third-party KYB integration costs, or design/build of the documented manual review fallback |
 | **Tranche 1 Total** | **$2,000** | |
 
@@ -25,8 +25,8 @@ This budget funds hardening a designed protocol, deploying it to mainnet, and ex
 
 | Line Item | Amount | Description |
 |---|---|---|
-| Mainnet deployment | $300 | Contract deployment transaction fees |
-| Frontend development | $1,600 | Public receivable page, business dashboard |
+| Mainnet deployment | $300 | Registry-first Clarinet mainnet deployment + `set-escrow-contract` wiring (testnet already live: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` / `.flowfi-escrow`); real sBTC default kept on mainnet |
+| Frontend development | $1,600 | Public receivable page + business dashboard on https://flowfi-btc.vercel.app/ (wallet signing, Hiro reads, burn-height date conversion) |
 | Documentation | $700 | README, risk disclosure, roadmap, technical architecture |
 | Initial hosting | $400 | Frontend hosting, domain, SSL for the pilot period |
 | **Tranche 2 Total** | **$3,000** | |

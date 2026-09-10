@@ -102,7 +102,7 @@ Full detail, including data models and function signatures, in [TECHNICAL_ARCHIT
 
 ## Links
 
-- **Repository:** [REPO LINK]
+- **Repository:** https://github.com/FlowFi-BTC/FlowFi-BTC
 - **Grant Application:** [APPLICATION_NARRATIVE.md](./APPLICATION_NARRATIVE.md)
 - **Risk Disclosure:** [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)
 - **Roadmap:** [ROADMAP.md](./ROADMAP.md)

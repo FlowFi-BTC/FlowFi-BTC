@@ -8,22 +8,22 @@ FlowFi BTC is not a whitepaper-stage idea. The following exists today, before an
 
 | Component | Detail |
 |---|---|
-| Contract architecture | Two-contract design (`registry.clar` + `escrow.clar`) fully specified, including data models, state machines, and permission model — see `TECHNICAL_ARCHITECTURE.md` |
+| Contract architecture + implementation | Two-contract design (`flowfi-registry` v1.0.0 + `flowfi-escrow` v1.0.0, Clarity 5) fully specified **and implemented**, including exact data models, burn-height state machines, and permission model — see `TECHNICAL_ARCHITECTURE.md`; deployed to testnet (`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry`, `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow`) with test-only `mock-sbtc-token` (`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`) |
 | Demo verification flow | Built and functioning — produces a normalized, hashable verification record regardless of underlying verification source |
 | Off-chain API layer | Built — connects verification data to the frontend and prepares contract-call parameters |
-| Frontend | Business dashboard and receivable-detail views built and functional against the current design |
+| Frontend (live) | https://flowfi-btc.vercel.app/ — business dashboard and receivable-detail views functional against the deployed contracts |
 
 ## Technical Depth Demonstrated
 
 Designing FlowFi BTC required working through non-trivial Clarity-specific problems:
 
-1. **`tx-sender` vs. `contract-caller` authorization** — financial state transitions (`mark-funded`, `mark-repaid`, `mark-defaulted`) are restricted to be callable only by the authorized escrow contract, preventing any wallet from forging financing state directly on the registry.
+1. **`tx-sender` vs. `contract-caller` authorization** — financial state transitions (`mark-funded`, `mark-repaid`, `mark-defaulted`) are restricted to the wired escrow via `(some contract-caller)`, with `escrow-contract` defaulting to `none` so the gate fails closed before wiring — preventing any wallet from forging financing state directly on the registry.
 
-2. **Custody precision** — choosing escrow-then-release (rather than atomic pass-through funding) specifically to make funding state easier to reason about and audit, and disclosing exactly what is and isn't custodied, for how long, in `RISK_DISCLOSURE.md`.
+2. **Custody precision** — choosing escrow-then-release (`fund-receivable` → admin `release-funds`) rather than atomic pass-through specifically to make funding state easier to reason about and audit; `release-funds`/`mark-default` are admin-gated timing gates whose recipient is always the stored business, and disclosing exactly what is and isn't custodied, for how long, in `RISK_DISCLOSURE.md`.
 
-3. **The repayment boundary** — recognizing explicitly that a smart contract cannot compel real-world fiat repayment, and designing `repay-receivable` to support both direct on-chain sBTC repayment and confirmed off-chain fiat settlement, rather than assuming away the harder, more realistic case.
+3. **The repayment boundary** — recognizing explicitly that a smart contract cannot compel real-world fiat repayment: v1.0.0 `repay-receivable` is business-only on-chain sBTC (atomic business → escrow → funder, flat amount), with any fiat leg living in the pilot's off-chain process layer rather than a pretended contract guarantee.
 
-4. **Verification abstraction** — designing verification result storage (status/method/level enums, reference and proof hashes) so that a demo-stage manual review and a future third-party KYB provider produce identical on-chain records, without requiring a contract redesign later.
+4. **Burn-height time + verification abstraction** — all dates as Bitcoin-anchored burn-heights with lazy expiry derivation (`expiry = u0` = never), and verification results stored as (status/method/level enums + `buff-32` reference/proof hashes) so manual review and future KYB produce identical on-chain records without redesign.
 
 5. **Scope discipline** — the project went through several more ambitious architectures (a full multi-contract marketplace protocol, a public investor pool, automated KYB) before deliberately cutting back to the two-contract, single-pilot design submitted here, specifically to manage legal and execution risk appropriately for a first grant.
 
@@ -39,7 +39,7 @@ Designing FlowFi BTC required working through non-trivial Clarity-specific probl
 
 ### Code Quality Practices
 
-- Clear separation of protocol state (`registry.clar`) from money movement (`escrow.clar`) — neither contract duplicates the other's responsibility
+- Clear separation of protocol state (`flowfi-registry`) from money movement (`flowfi-escrow`) — neither contract duplicates the other's responsibility
 - Enums (verification status/method/level, receivable status) instead of raw strings, for extensibility without redesign
 - Sensitive data (documents, identity information) kept off-chain; only hashes recorded on-chain
 

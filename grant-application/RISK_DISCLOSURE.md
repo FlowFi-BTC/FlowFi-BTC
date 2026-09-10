@@ -1,6 +1,13 @@
 # FlowFi BTC — Risk Disclosure
 
-This document states plainly what FlowFi BTC's contracts do and do not guarantee. It is written to be read before funding any receivable, and reviewed before this project receives any grant funding.
+This document states plainly what FlowFi BTC's contracts (`flowfi-registry` v1.0.0,
+`flowfi-escrow` v1.0.0, `mock-sbtc-token` v1.0.0) do and do not guarantee. It is written to be
+read before funding any receivable, and reviewed before this project receives any grant funding.
+
+Live references: frontend https://flowfi-btc.vercel.app/; testnet registry
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry`; escrow
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow`; mock sBTC
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`.
 
 ---
 
@@ -8,11 +15,11 @@ This document states plainly what FlowFi BTC's contracts do and do not guarantee
 
 | Claim | Status |
 |---|---|
-| A verified business registered this receivable | **Enforced on-chain** — `register-receivable` requires `is-business-verified` to return true |
-| The receivable's status (Open/Funded/Repaid/Defaulted) reflects reality | **Enforced on-chain**, but only as accurately as the inputs that produced it (see verification and repayment sections below) |
-| Funds are held by the smart contract, not by any team wallet | **True, and precise:** `escrow.clar` holds sBTC between `fund-receivable` and `release-funds`. No private key controlled by the team custodies funds at any point. This is a non-custodial escrow, not "no custody at all" — funds do sit in the contract briefly by design |
+| A verified business registered this receivable | **Enforced on-chain** — `register-receivable` requires `is-business-verified` (VERIFIED + unexpired, unrevoked) to return true, else `u106` |
+| The receivable's status (Open/Funded/Repaid/Defaulted/Cancelled) reflects reality | **Enforced on-chain**, but only as accurately as the inputs that produced it (see verification and repayment sections below). `mark-funded`/`mark-repaid`/`mark-defaulted` are callable only by the wired escrow via `contract-caller` |
+| Funds are held by the smart contract, not by any team wallet | **True, and precise:** `flowfi-escrow` holds sBTC between `fund-receivable` and admin-gated `release-funds`. No private key controlled by the team custodies funds at any point. This is a non-custodial escrow, not "no custody at all" — funds do sit in the contract briefly by design |
 | The business will repay | **Not enforced on-chain.** No smart contract can compel a real-world payment. See Section 3. |
-| The underlying invoice is genuine | **Not independently guaranteed.** See Section 2. |
+| The underlying invoice is genuine | **Not independently guaranteed.** Only `invoice-hash (buff 32)` is on-chain; the document stays off-chain. See Section 2. |
 
 ---
 
@@ -37,10 +44,17 @@ Both paths produce the same normalized on-chain record: verification status, met
 
 A smart contract can enforce what happens to funds *it holds*. It cannot compel a business to acquire funds and voluntarily repay, nor can it compel a debtor to pay the original invoice on time.
 
-For this pilot, repayment happens one of two ways:
+For this pilot, repayment of the on-chain position happens one way in v1.0.0:
 
-1. **Direct on-chain sBTC repayment** — if the business holds or acquires sBTC (e.g., by converting fiat proceeds through an existing exchange or bridge), it repays directly through `repay-receivable`, and sBTC moves from the business to the provider within that transaction.
-2. **Off-chain fiat repayment, confirmed on-chain** — if the business's debtor pays in fiat and the business settles with the provider off-chain (e.g., bank transfer), an authorized party confirms this occurred, and the registry records the repaid state without an accompanying sBTC transfer.
+1. **Direct on-chain sBTC repayment** — the business calls `escrow.repay-receivable(receivable-id, token)`.
+   The call reverts unless the caller is the stored business (`u209`), the escrow is FUNDED (`u206`),
+   and funds were already released (`u208`). It moves exactly `funding-amount` business → escrow →
+   funder atomically (flat, no interest field) and calls `registry.mark-repaid`.
+
+If the business's debtor pays in fiat and the business settles with the provider off-chain (e.g., bank
+transfer), **v1.0.0 has no contract function that records that attestation** — that confirmation lives
+in the pilot's off-chain process layer, not in `repay-receivable` (which always executes two SIP-010
+transfers). A future version can add an admin-attested confirmation path without changing the happy path.
 
 **This is disclosed explicitly because:** it is the honest boundary of what any receivables-financing smart contract can enforce, and it mirrors how comparable real-world-asset financing protocols handle the same on-chain/off-chain settlement gap. FlowFi BTC does not build or operate any fiat-to-sBTC exchange service, and does not intend to — that would introduce a separate, unrelated regulatory category (money transmission) that this pilot deliberately avoids.
 
@@ -48,7 +62,9 @@ For this pilot, repayment happens one of two ways:
 
 ## 4. Default
 
-If a funded receivable passes its due date without repayment, `mark-default` records the receivable as `DEFAULTED` on-chain.
+If a funded, released receivable passes its burn-height `due-date` without repayment, the **admin**
+calls `escrow.mark-default(receivable-id)` (reverts `u200` for non-admin, `u210` if not yet due,
+`u208` if never released), which calls `registry.mark-defaulted`.
 
 **What this does not do:** attempt any automated recovery, collection, or legal action. A recorded default is data — an honest, transparent outcome — not a resolved dispute. Recovery, if pursued at all for this pilot, would happen entirely off-chain and outside this grant's scope.
 
@@ -56,7 +72,7 @@ If a funded receivable passes its due date without repayment, `mark-default` rec
 
 ## 5. Contract Security
 
-The contracts (`registry.clar` and `escrow.clar`) are **not formally audited** as of this application. Risk is bounded for this pilot by:
+The contracts (`flowfi-registry` v1.0.0 and `flowfi-escrow` v1.0.0) are **not formally audited** as of this application. Risk is bounded for this pilot by:
 
 - Small ticket size
 - One business, one provider — no pooled funds, no multiple counterparties

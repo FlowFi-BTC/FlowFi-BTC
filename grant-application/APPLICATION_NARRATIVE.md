@@ -12,7 +12,7 @@
 
 FlowFi BTC lets a verified business register a real trade receivable and receive financing directly from an sBTC holder through a non-custodial Clarity smart contract — proving, with one real transaction, that Bitcoin liquidity can finance real-world cash flows.
 
-*For the fuller product description independent of this grant application, see [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md).*
+*For the fuller product description independent of this grant application, see the repo-root [PROJECT_OVERVIEW](../README.md).*
 
 ---
 
@@ -36,15 +36,22 @@ At the same time, small and growing businesses routinely have capital locked in 
 
 ## 2. Solution: FlowFi BTC
 
-FlowFi BTC is a two-contract Clarity protocol: `registry.clar` (identity, verification, and receivable state) and `escrow.clar` (sBTC custody, funding, and settlement). See [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md) for full detail.
+FlowFi BTC is a two-contract Clarity protocol: `flowfi-registry` (identity, verification, and receivable state — holds no sBTC) and `flowfi-escrow` (sBTC custody, funding, and settlement). See [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md) for the code-verified spec.
+
+Live on Stacks testnet today — deployer `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ`:
+
+- Registry: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry`
+- Escrow: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow`
+- Mock sBTC (test-only faucet/mint token): `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`
+- Frontend: https://flowfi-btc.vercel.app/
 
 ### How It Works
 
-1. **Register** — A business registers on-chain and completes a verification step (demo-stage manual review, or a third-party KYB provider if integration completes in time — see [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)).
-2. **Submit** — The verified business registers one real receivable: amount, due date, and a hash of the underlying invoice evidence.
-3. **Fund** — A capital provider reviews the receivable and its verification status, then funds it directly with sBTC through their own wallet. FlowFi BTC never holds a user's private key.
-4. **Escrow & Release** — sBTC is held in the escrow contract and released to the business once funding is confirmed.
-5. **Repay & Settle** — The business repays, either directly in sBTC or via confirmed off-chain fiat settlement (see [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md) for why this boundary exists and how it's handled honestly). The registry records the final state: repaid or defaulted.
+1. **Register** — A business registers on-chain via `registry.register-business` (one business per wallet) and completes verification via `verify-business` (verifier-only; demo-stage Manual Pilot Review, or third-party KYB if integration completes — see [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)). Expiry is lazy: `is-business-verified` re-derives it every read.
+2. **Submit** — The verified business registers one real receivable via `register-receivable`: debtor, invoice number + `invoice-hash (buff 32)`, `face-value`, `funding-amount (≤ face-value)`, and burn-height `issue/due-date`. Status opens as `OPEN`.
+3. **Fund** — A capital provider (any wallet except the business itself) reviews the receivable and calls `escrow.fund-receivable` with the SIP-010 token. Exactly `funding-amount` moves provider → escrow; the amount is read from the registry so under/over-funding is impossible. Registry flips `OPEN → FUNDED` via escrow-only `mark-funded`.
+4. **Escrow & Release** — sBTC sits in `flowfi-escrow` until the **admin** calls `release-funds` (MVP compliance gate; recipient is always the stored business, never redirectable), moving escrow → business.
+5. **Repay & Settle** — The business repays on-chain via `repay-receivable` (business-only; moves `funding-amount` business → escrow → funder atomically; registry `FUNDED → REPAID`), or past-due the admin records `mark-default` (no funds move; registry `FUNDED → DEFAULTED`). Off-chain fiat settlement, if used, is a process-layer confirmation in v1.0.0 — the contract has no off-chain-confirm function (see [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)). FlowFi BTC never holds a user's private key.
 
 ### What Makes This Stacks-Native
 
@@ -60,11 +67,11 @@ FlowFi BTC is not an idea-stage application. The following exists today:
 
 | Component | Status |
 |---|---|
-| Contract architecture (`registry.clar` + `escrow.clar`) | Design finalized, implementation in progress |
+| Contracts (`flowfi-registry` v1.0.0 + `flowfi-escrow` v1.0.0 + `mock-sbtc-token` v1.0.0) | Implemented and **deployed to Stacks testnet** (principals above); wiring: `set-escrow-contract` + `set-sbtc-contract` → mock |
 | Demo verification flow | Built — produces a normalized, on-chain-hashable verification record |
 | Off-chain API layer | Built — connects verification data to the frontend and contract calls |
-| Frontend (business dashboard + public receivable page) | Built |
-| Test suite | In progress — target 40–60 tests across both contracts before mainnet |
+| Frontend (live) | https://flowfi-btc.vercel.app/ — business dashboard + public receivable page |
+| Test suite | Scaffolding in place (`vitest-environment-clarinet` placeholders); M1 target: 40–60 tests + 2 lifecycle integrations |
 
 ---
 
@@ -118,6 +125,11 @@ See [ROADMAP.md](./ROADMAP.md). In short: if the single pilot resolves and prove
 
 ## 9. Links & Resources
 
-- **Repository:** [REPO LINK]
+- **Frontend (live):** https://flowfi-btc.vercel.app/
+- **Testnet registry:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry?chain=testnet))
+- **Testnet escrow:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow?chain=testnet))
+- **Testnet mock sBTC:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token?chain=testnet))
+- **Repository:** [https://github.com/FlowFi-BTC/FlowFi-BTC](https://github.com/FlowFi-BTC/FlowFi-BTC)
 - **Risk Disclosure:** [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)
 - **Technical Architecture:** [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md)
+- **Security Self-Review:** [SECURITY_REVIEW.md](./SECURITY_REVIEW.md)

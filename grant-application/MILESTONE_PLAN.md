@@ -6,7 +6,12 @@
 
 ## Scope Lock
 
-**Primary user for this grant: one real business (capital seeker) and one real sBTC provider (capital giver), completing one full financing cycle through `registry.clar` and `escrow.clar`.**
+**Primary user for this grant: one real business (capital seeker) and one real sBTC provider (capital giver), completing one full financing cycle through `flowfi-registry` and `flowfi-escrow`.**
+
+Live references for every milestone: frontend https://flowfi-btc.vercel.app/; testnet registry
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry`; escrow
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow`; mock sBTC
+`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`.
 
 This is not a marketplace, not a multi-tenant platform, and not a consumer investment product. Every milestone below is evaluated against one question:
 
@@ -29,13 +34,14 @@ Explicitly deferred (see [ROADMAP.md](./ROADMAP.md), not built in this grant):
 
 | Item | Detail |
 |---|---|
-| `registry.clar` finalized | Business registration, verification (status/method/level enums), receivable registration and lifecycle state, authorization restricting financial state changes to the authorized escrow contract only |
-| `escrow.clar` finalized | Funding, escrow-then-release, repayment confirmation, default marking — restricted to real sBTC (SIP-010) movement, no custody by any private/team wallet |
-| Test suite | Target 40–60 tests across both contracts on Clarinet simnet: business registration, verification (verified/unverified/expired/revoked/unauthorized-verifier), receivable registration (verified vs. unverified business), funding (open/already-funded/wrong-amount), release, repayment (correct/underpayment/double-repayment), default (before/after due date, already-repaid, already-defaulted) |
-| Two full integration tests | (1) full happy path: register → verify → register receivable → fund → release → repay → REPAID. (2) default path: register → verify → register receivable → fund → release → due date passes → default → DEFAULTED |
+| `flowfi-registry` finalized | Business registration (one per wallet), verifier-gated verification (status/method/level enums + lazy expiry + `buff-32` hashes), receivable registration and lifecycle state; `mark-funded`/`mark-repaid`/`mark-defaulted` restricted to the wired escrow via `contract-caller` |
+| `flowfi-escrow` finalized | `fund-receivable` (provider ≠ business, exact registry amount), admin-only `release-funds`, business-only `repay-receivable` (flat, atomic), admin-only `mark-default` (past burn-height due-date); SIP-010 structural trait + wrong-token guard; no custody outside documented paths |
+| `mock-sbtc-token` (testnet) | Admin `mint` + self-serve `claim-daily-sbtc` (100 sBTC / 144 burn-blocks, 8 decimals); live at `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token` |
+| Test suite | 40–60 tests across both contracts plus two integration tests (placeholders exist today; suite lands in M1) |
+| Two full integration tests | (1) full happy path: register → verify → register receivable → fund → release → repay → REPAID. (2) default path: register → verify → register receivable → fund → release → due date passes → admin default → DEFAULTED |
 | Verification path finalized | Either a completed third-party KYB integration, or the documented Manual Pilot Review fallback — both produce a normalized, on-chain-hashed verification record so the contract layer doesn't change either way |
-| Security self-review | Completed against the checklist in [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) — authorization on every mutating function, `tx-sender` vs. `contract-caller` correctness, token conservation, correct status-transition guards |
-| Testnet deployment | Both contracts live and interacting correctly on Stacks testnet |
+| Security self-review | Completed against [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) — authorization on every mutating function, `tx-sender` vs. `contract-caller` correctness, token conservation, correct status-transition guards |
+| Testnet deployment | **Already live** (registry + escrow + mock at principals above, wired via `set-escrow-contract` / `set-sbtc-contract`); M1 re-verifies wiring and publishes explorer links + `get-escrow-contract` / `get-sbtc-contract` reads |
 
 ### Success Metrics
 
@@ -59,8 +65,8 @@ Working testnet deployment of both contracts + passing test suite (including bot
 
 | Item | Detail |
 |---|---|
-| Mainnet deployment | `registry.clar` and `escrow.clar` deployed to Stacks mainnet, correctly configured (authorized escrow address, sBTC contract reference) |
-| Public receivable page | Wallet-aware: business sees management actions, provider sees funding actions, anyone else sees read-only status and verification information |
+| Mainnet deployment | `flowfi-registry` and `flowfi-escrow` deployed to Stacks mainnet (registry first), wired via `set-escrow-contract`; `sbtc-contract` left at real-sBTC default `'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token` — never a mock |
+| Public receivable page | Wallet-aware on https://flowfi-btc.vercel.app/: business sees management actions, provider sees funding actions, anyone else sees read-only status and verification information |
 | Business dashboard | Overview, Receivables, Active Funding, Settings |
 | Full documentation | `README.md`, `RISK_DISCLOSURE.md`, `ROADMAP.md`, `TECHNICAL_ARCHITECTURE.md` — all published, open-source |
 | Explicit custody statement | `RISK_DISCLOSURE.md` states precisely what escrow holds, for how long, and under what conditions it releases — not a blanket "no custody" claim, since escrow briefly holds funds by design |
@@ -88,8 +94,8 @@ Live mainnet contracts + functioning public page and dashboard + complete, accur
 | Item | Detail |
 |---|---|
 | Named real business | One real business, verified through the Milestone 1 verification path, registers one real receivable on mainnet |
-| Named real capital provider | One real sBTC holder funds the receivable with a real, on-chain sBTC transaction |
-| Full cycle to resolution | Registered → Funded → Repaid or Defaulted, completed on-chain. Repayment may occur via direct sBTC or via confirmed off-chain fiat settlement reflected on-chain, per the boundary disclosed in `RISK_DISCLOSURE.md` |
+| Named real capital provider | One real sBTC holder funds the receivable with a real, on-chain sBTC transaction via `fund-receivable` (admin then calls `release-funds`) |
+| Full cycle to resolution | Registered (OPEN) → Funded (FUNDED) → Repaid (REPAID) or Defaulted (DEFAULTED, admin `mark-default` past burn-height due-date), completed on-chain. On-chain sBTC repayment via `repay-receivable`; any off-chain fiat leg is process-confirmed (v1.0.0 has no off-chain-confirm function), per `RISK_DISCLOSURE.md` |
 | Outcome report | `PILOT_RESULT.md` — the actual outcome, whichever it is, what worked, what didn't, and what Phase 2 needs based on real evidence |
 
 ### Success Metrics
