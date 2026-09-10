@@ -34,7 +34,7 @@ Explicitly deferred (see [ROADMAP.md](./ROADMAP.md), not built in this grant):
 | Test suite | Target 40–60 tests across both contracts on Clarinet simnet: business registration, verification (verified/unverified/expired/revoked/unauthorized-verifier), receivable registration (verified vs. unverified business), funding (open/already-funded/wrong-amount), release, repayment (correct/underpayment/double-repayment), default (before/after due date, already-repaid, already-defaulted) |
 | Two full integration tests | (1) full happy path: register → verify → register receivable → fund → release → repay → REPAID. (2) default path: register → verify → register receivable → fund → release → due date passes → default → DEFAULTED |
 | Verification path finalized | Either a completed third-party KYB integration, or the documented Manual Pilot Review fallback — both produce a normalized, on-chain-hashed verification record so the contract layer doesn't change either way |
-| Security self-review | Checklist covering authorization on every mutating function, `tx-sender` vs. `contract-caller` correctness, no reentrancy vectors, correct status-transition guards |
+| Security self-review | Completed against the checklist in [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) — authorization on every mutating function, `tx-sender` vs. `contract-caller` correctness, token conservation, correct status-transition guards |
 | Testnet deployment | Both contracts live and interacting correctly on Stacks testnet |
 
 ### Success Metrics
@@ -42,7 +42,7 @@ Explicitly deferred (see [ROADMAP.md](./ROADMAP.md), not built in this grant):
 - [ ] 40+ tests passing on Clarinet simnet, 0 known failing edge cases
 - [ ] Both integration tests (happy path and default path) passing end-to-end
 - [ ] Verification path produces a real, reviewable record for at least one test business
-- [ ] `SECURITY_REVIEW.md` published
+- [ ] [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) completed and published, with sign-off section filled in
 
 ### Acceptance Criteria for Tranche Release
 

@@ -12,6 +12,8 @@
 
 FlowFi BTC lets a verified business register a real trade receivable and receive financing directly from an sBTC holder through a non-custodial Clarity smart contract — proving, with one real transaction, that Bitcoin liquidity can finance real-world cash flows.
 
+*For the fuller product description independent of this grant application, see [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md).*
+
 ---
 
 ## 1. Problem Statement

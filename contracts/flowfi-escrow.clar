@@ -15,7 +15,7 @@
 ;;   versus paying the business directly on funding.
 ;;
 ;; deployment order: deploy AFTER registry.clar (this contract calls
-;;   .registry directly via contract-call?, a static reference that
+;;   .flowfi-registry directly via contract-call?, a static reference that
 ;;   requires registry's interface to exist already at compile time).
 ;;   After deploying THIS contract, an admin must call
 ;;   registry.set-escrow-contract with this contract's fully-qualified
@@ -114,12 +114,12 @@
 ;; agreed to).
 ;; -------------------------------------------------------------------
 (define-public (fund-receivable (receivable-id uint) (token <sip-010-trait>))
-  (let ((receivable (unwrap! (contract-call? .registry get-receivable receivable-id) ERR-NOT-FOUND)))
+  (let ((receivable (unwrap! (contract-call? .flowfi-registry get-receivable receivable-id) ERR-NOT-FOUND)))
     (asserts! (is-eq (contract-of token) (var-get sbtc-contract)) ERR-WRONG-TOKEN)
     (asserts! (is-eq (get status receivable) REGISTRY-STATUS-OPEN) ERR-RECEIVABLE-NOT-OPEN)
     (asserts! (is-none (map-get? escrows receivable-id)) ERR-ALREADY-FUNDED)
     (let (
-          (business (unwrap! (contract-call? .registry get-business (get business-id receivable)) ERR-NOT-FOUND))
+          (business (unwrap! (contract-call? .flowfi-registry get-business (get business-id receivable)) ERR-NOT-FOUND))
           (amount (get funding-amount receivable))
           (escrow-id (var-get next-escrow-id))
          )
@@ -138,7 +138,7 @@
         settled-at: none
       })
       (var-set next-escrow-id (+ escrow-id u1))
-      (try! (contract-call? .registry mark-funded receivable-id tx-sender amount escrow-id))
+      (try! (contract-call? .flowfi-registry mark-funded receivable-id tx-sender amount escrow-id))
       (print { event: "receivable-funded", receivable-id: receivable-id, escrow-id: escrow-id,
                funder: tx-sender, amount: amount })
       (ok escrow-id)
@@ -191,7 +191,7 @@
       (try! (as-contract (contract-call? token transfer amount tx-sender funder none)))
       (map-set escrows receivable-id
         (merge escrow { status: STATUS-REPAID, repaid-at: (some burn-block-height), settled-at: (some burn-block-height) }))
-      (try! (contract-call? .registry mark-repaid receivable-id))
+      (try! (contract-call? .flowfi-registry mark-repaid receivable-id))
       (print { event: "receivable-repaid", receivable-id: receivable-id, funder: funder, amount: amount })
       (ok true)
     )
@@ -210,14 +210,14 @@
     (asserts! (is-eq tx-sender (var-get admin)) ERR-NOT-AUTHORIZED)
     (let (
           (escrow (unwrap! (map-get? escrows receivable-id) ERR-NOT-FOUND))
-          (receivable (unwrap! (contract-call? .registry get-receivable receivable-id) ERR-NOT-FOUND))
+          (receivable (unwrap! (contract-call? .flowfi-registry get-receivable receivable-id) ERR-NOT-FOUND))
          )
       (asserts! (is-eq (get status escrow) STATUS-FUNDED) ERR-INVALID-STATUS)
       (asserts! (is-some (get released-at escrow)) ERR-NOT-RELEASED)
       (asserts! (> burn-block-height (get due-date receivable)) ERR-NOT-DUE)
       (map-set escrows receivable-id
         (merge escrow { status: STATUS-DEFAULTED, settled-at: (some burn-block-height) }))
-      (try! (contract-call? .registry mark-defaulted receivable-id))
+      (try! (contract-call? .flowfi-registry mark-defaulted receivable-id))
       (print { event: "receivable-defaulted", receivable-id: receivable-id })
       (ok true)
     )
