@@ -20,6 +20,7 @@ Live references: frontend https://flowfi-btc.vercel.app/; testnet registry
 | Funds are held by the smart contract, not by any team wallet | **True, and precise:** `flowfi-escrow` holds sBTC between `fund-receivable` and admin-gated `release-funds`. No private key controlled by the team custodies funds at any point. This is a non-custodial escrow, not "no custody at all" — funds do sit in the contract briefly by design |
 | The business will repay | **Not enforced on-chain.** No smart contract can compel a real-world payment. See Section 3. |
 | The underlying invoice is genuine | **Not independently guaranteed.** Only `invoice-hash (buff 32)` is on-chain; the document stays off-chain. See Section 2. |
+| The sBTC token referenced is the real one | **True on mainnet by default** — `escrow.sbtc-contract` defaults to `SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token`. `set-sbtc-contract` exists to repoint this for testnet development and should never be invoked after mainnet launch. |
 
 ---
 
