@@ -4,7 +4,7 @@
 
 **FlowFi BTC** is a two-contract Clarity protocol on Stacks that lets a verified business register a real trade receivable and receive financing directly from an sBTC holder — non-custodially, transparently, and without a pooled fund or a marketplace.
 
-This document is the product-level overview for the repository. For the grant-specific pitch, see [APPLICATION_NARRATIVE.md](./APPLICATION_NARRATIVE.md). For contract internals, see [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md).
+This document is the product-level overview for the repository. For the grant-specific pitch, see [APPLICATION_NARRATIVE.md](./grant-application/APPLICATION_NARRATIVE.md). For contract internals, see [TECHNICAL_ARCHITECTURE.md](./grant-application/TECHNICAL_ARCHITECTURE.md).
 
 ---
 
@@ -70,10 +70,10 @@ Two contracts, strictly separated by responsibility:
 
 | Contract | Owns |
 |---|---|
-| `registry.clar` | Business identity, verification, receivable metadata and lifecycle status |
-| `escrow.clar` | sBTC custody, funding, release, repayment, default |
+| `flowfi-registry.clar` | Business identity, verification, receivable metadata and lifecycle status |
+| `flowfi-escrow.clar` | sBTC custody, funding, release, repayment, default |
 
-Full detail, including data models and function signatures, in [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md).
+Full detail, including data models and function signatures, in [TECHNICAL_ARCHITECTURE.md](./grant-application/TECHNICAL_ARCHITECTURE.md).
 
 ---
 
