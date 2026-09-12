@@ -156,6 +156,7 @@ A release candidate means the contracts are finalized and every step of the main
 The frontend currently points to testnet (mock sBTC). The contracts are testnet-deployed. To satisfy M2:
 - Contracts must be deployed to mainnet and verifiable on Stacks Explorer, with the real sBTC principal
 - Frontend + API must switch environment to mainnet and hide the mock faucet
+- No public page shows the full funding trail today — without one, the proving flow is invisible to anyone who was not a counterparty
 - 1 real-asset flow must run on mainnet end-to-end — self-funded with a small amount initially, to establish the baseline before the named pilot counterparties in M3
 
 ---
@@ -202,7 +203,29 @@ This is both a technical verification step and the foundation of the pilot story
 
 **This proving flow also serves as first social content** — each step is a shareable mainnet transaction on Stacks Explorer.
 
-**Success metric:** 1 complete create-to-repay chain on mainnet, with explorer links submitted as evidence.
+**Success metric:** 1 complete create-to-repay chain on mainnet, with explorer links submitted as evidence — and visible on the public transparency page (Deliverable 2.4).
+
+---
+
+### Deliverable 2.4 — Public Transparency Page (how the provider funded the business, in detail)
+
+**Target: A public, no-wallet route that shows the full funding trail of any cycle, step by step**
+
+Anyone — reviewer, future business, future provider — can open the page without connecting a wallet and see exactly how money moved, backed by on-chain records rather than claims.
+
+**What the page shows, in order:**
+1. **The business** — name, registration reference, and verification status (verified by whom, when, at what level)
+2. **The receivable** — invoice reference, face value, funding amount, due date, debtor, and the invoice SHA-256 evidence hash
+3. **The funding** — provider wallet address, exact sBTC amount pulled (read from the registry, so under/over-funding is impossible), and the funding transaction hash
+4. **The escrow trail** — FUNDED → RELEASED (admin release, tx hash, timestamp) → REPAID or DEFAULTED (tx hash or honestly labeled off-chain record), each state with its timestamp
+5. **Every transaction hash** as a Stacks Explorer link, so any step can be independently verified
+
+**Implementation notes:**
+- Read-only: built on existing read endpoints (receivable detail, on-chain state, activity timeline, escrow, transaction proof). No new contract surface, no new custody, no wallet required.
+- Statuses that are still off-chain records (e.g. the MVP default flag) are labeled as such and never linked as chain proofs.
+- The M2 proving flow (Deliverable 2.3) ships displayed on this page; the M3 pilot cycle reuses the same page, so reviewers compare like with like.
+
+**Success metric:** Transparency page reachable without a wallet, showing the M2 proving flow end-to-end with working explorer links on every step.
 
 ---
 
@@ -213,6 +236,7 @@ This is both a technical verification step and the foundation of the pilot story
 | Contract addresses | Stacks Explorer links for both contracts |
 | Production frontend | Live URL pointed at mainnet |
 | 1 proving flow | Transaction hashes: register → verify → register-receivable → fund → release → repay on mainnet |
+| Transparency page | Live URL + screenshot showing the proving flow's full funding trail with explorer links |
 
 ---
 
@@ -274,6 +298,7 @@ Two Nigerian SME leads already contacted (see `PILOT_READINESS.md`) — one is s
 |---|---|
 | Named counterparties | Business + provider references (per consent) with readiness trail |
 | Cycle evidence | Explorer links: register → verify → register-receivable → fund → release → repay/default on mainnet |
+| Transparency page | Updated live URL showing the pilot cycle's full funding trail (same page as M2) |
 | Outcome report | `PILOT_RESULT.md` published in the repository |
 
 ---
@@ -546,6 +571,6 @@ These tools are selected for alignment with the Stacks ecosystem, low cost, and 
 | Milestone | Core Deliverable | Grant % | Amount | Primary Evidence |
 |---|---|---|---|---|
 | M1: Hardening | 70+ tests, public security review, RC tag | 20% | $2,000 | Test log, `SECURITY_REVIEW.md`, GitHub release |
-| M2: Launch | Mainnet contracts, production frontend, 1 proving flow | 30% | $3,000 | Explorer links, live URL, cycle tx hashes |
+| M2: Launch | Mainnet contracts, production frontend + public transparency page, 1 proving flow | 30% | $3,000 | Explorer links, live URL, cycle tx hashes |
 | M3: Pilot | 1 real business + 1 real provider, 1 resolved cycle | 50% | $5,000 | On-chain cycle, counterparties, `PILOT_RESULT.md` |
 | **Total** | | **100%** | **$10,000** | |
