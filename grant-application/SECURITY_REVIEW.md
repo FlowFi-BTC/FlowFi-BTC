@@ -135,8 +135,8 @@ today; M1 exit criteria:
 
 ## Sign-off
 
-**Reviewed by:** [YOUR NAME]
-**Date:** [DATE]
+**Reviewed by:** : @ProdevappOFFICIAL
+**Date:** September 1, 2026
 **Contracts reviewed:** `flowfi-registry.clar` v1.0.0, `flowfi-escrow.clar` v1.0.0,
 `mock-sbtc-token.clar` v1.0.0 at testnet principals above.
 **Result:** [e.g. "All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks
