@@ -2,6 +2,19 @@
 
 ---
 
+## About the Team
+
+**Oyewale Prudence** — builder of FlowFi BTC, with prior shipped work in the Stacks ecosystem:
+
+- **[LabSTX](https://labstx.online)** — a live Clarity development-tooling IDE, cited in official Stacks documentation. This is the most directly relevant credential to FlowFi BTC's contract work: it demonstrates hands-on depth with Clarity tooling specifically, not just general blockchain development.
+- **[StacksMart](https://stacks-mart-murex.vercel.app/)** ([source](https://github.com/ProdevappOFFICIAL/StacksMart)) — a live Next.js storefront with `@stacks/connect` wallet authentication, an admin dashboard, and STX checkout. This demonstrates full-stack shipping discipline and real wallet-integration experience — the same `@stacks/connect` pattern FlowFi BTC's frontend relies on.
+
+**Honest caveat:** StacksMart takes direct STX payments and does not include custom Clarity contracts — it proves frontend and wallet-integration ability, not additional Clarity-contract depth beyond what FlowFi BTC's own `flowfi-registry`/`flowfi-escrow` contracts already demonstrate. LabSTX is the stronger Clarity-specific credential of the two.
+
+Both are real, live, public-repository Stacks-ecosystem products, shipped before this grant application — the same kind of evidence this document's "Execution Evidence" section below relies on for FlowFi BTC itself.
+
+---
+
 ## Execution Evidence
 
 FlowFi BTC is not a whitepaper-stage idea. The following exists today, before any grant funding:
@@ -25,7 +38,11 @@ Designing FlowFi BTC required working through non-trivial Clarity-specific probl
 
 4. **Burn-height time + verification abstraction** — all dates as Bitcoin-anchored burn-heights with lazy expiry derivation (`expiry = u0` = never), and verification results stored as (status/method/level enums + `buff-32` reference/proof hashes) so manual review and future KYB produce identical on-chain records without redesign.
 
-5. **Scope discipline** — the project went through several more ambitious architectures (a full multi-contract marketplace protocol, a public investor pool, automated KYB) before deliberately cutting back to the two-contract, single-pilot design submitted here, specifically to manage legal and execution risk appropriately for a first grant.
+5. **Real mainnet-contract awareness** — `flowfi-escrow`'s sBTC reference defaults to the actual mainnet sBTC token (`SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token`), with a testnet-only override path to the mock token, rather than hard-coding a testnet address that would need replacing at mainnet launch.
+
+6. **Scope discipline** — the project went through several more ambitious architectures (a full multi-contract marketplace protocol, a public investor pool, automated KYB) before deliberately cutting back to the two-contract, single-pilot design submitted here, specifically to manage legal and execution risk appropriately for a first grant.
+
+7. **Active pilot-sourcing, not deferred to post-funding** — two candidate businesses and one candidate capital provider have already been contacted and expressed preliminary interest, ahead of any grant funding being received (see [PILOT_READINESS.md](./PILOT_READINESS.md)). This is the business-development work this grant is meant to fund already underway, not work waiting on the grant to start.
 
 ---
 

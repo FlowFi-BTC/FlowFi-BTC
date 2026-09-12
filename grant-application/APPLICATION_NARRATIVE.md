@@ -61,17 +61,37 @@ Live on Stacks testnet today — deployer `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCS
 
 ---
 
-## 3. Current Progress
+## 3. Current Progress (Proof of Concept)
 
-FlowFi BTC is not an idea-stage application. The following exists today:
+I have a working MVP deployed to Stacks testnet with a fully functional frontend. This is not an idea — it is a built product.
 
-| Component | Status |
-|---|---|
-| Contracts (`flowfi-registry` v1.0.0 + `flowfi-escrow` v1.0.0 + `mock-sbtc-token` v1.0.0) | Implemented and **deployed to Stacks testnet** (principals above); wiring: `set-escrow-contract` + `set-sbtc-contract` → mock |
-| Demo verification flow | Built — produces a normalized, on-chain-hashable verification record |
-| Off-chain API layer | Built — connects verification data to the frontend and contract calls |
-| Frontend (live) | https://flowfi-btc.vercel.app/ — business dashboard + public receivable page |
-| Test suite | Scaffolding in place (`vitest-environment-clarinet` placeholders); M1 target: 40–60 tests + 2 lifecycle integrations |
+### Smart Contracts (Deployed to Testnet)
+
+| Contract | Lines | Status |
+|---|---|---|
+| `flowfi-registry.clar` | 385 | Complete — 11 public functions (register-business, verify-business, revoke-verification, register-receivable, cancel-receivable, mark-funded, mark-repaid, mark-defaulted, set-admin, set-verifier, set-escrow-contract), 10 read-only functions |
+| `flowfi-escrow.clar` | 257 | Complete — 6 public functions (fund-receivable, release-funds, repay-receivable, mark-default, set-admin, set-sbtc-contract), 4 read-only functions |
+| `mock-sbtc-token.clar` | 161 | Complete — test-only SIP-010 stand-in for sBTC (8 decimals, admin mint + self-serve daily faucet) |
+
+Testnet deployer: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ`
+
+- Registry: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry`
+- Escrow: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow`
+- Mock sBTC (test-only faucet/mint token): `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`
+- Wiring: `set-escrow-contract` + `set-sbtc-contract` → mock (escrow-only `mark-funded` / `mark-repaid` / `mark-defaulted` gate enforced)
+
+### Test Suite
+
+46 tests passing (26 flowfi-registry + 20 flowfi-escrow)
+Covers: register-business (incl. duplicate rejection), verify-business (verifier-only, method/level range, expiry), revoke-verification, is-business-verified (incl. lazy expiry), register-receivable (owner + verified gates, funding-amount ≤ face-value, due/issue dates), cancel-receivable, escrow auth gate (direct `mark-funded` rejected even by deployer), fund-receivable (exact registry amount pulled, non-OPEN / double-fund / self-fund / wrong-token rejections), release-funds (admin-only, no double-release, payout recorded), repay-receivable (release-first gate, business-only), mark-default (past-due-only, admin-only, repaid-excluded), admin reassignment, plus 2 end-to-end lifecycles (register → verify → fund → release → repay; and → default path)
+Built with Clarinet SDK v3.9.0 + Vitest 3.2.7 (`vitest-environment-clarinet`)
+
+### Frontend Application
+
+21 pages across landing, public marketplace explorer, receivable detail (wallet-aware), business dashboard (overview / receivables / submit / funding / settings), investor dashboard (overview / fundings / funding-detail), onboarding, business verification, transparency log, and admin surface — live at https://flowfi-btc.vercel.app/
+Full wallet integration (Leather & Xverse via `@stacks/connect`)
+All 7 contract interactions wired through backend `prepare → sign → confirm → poll`: register-business, verify-business (verifier session), register-receivable, fund-receivable, release-funds (admin), repay-receivable, mark-default (admin; MVP off-chain flag pending on-chain wiring)
+Off-chain API layer (11 routers: auth, onboarding, businesses, investors, receivables, marketplace, verification, fundings, transactions, escrows, dashboards) connects verification data, invoice SHA-256 evidence, and `operationId` + `Idempotency-Key` flows to the frontend and contract calls
 
 ---
 
@@ -126,8 +146,8 @@ See [ROADMAP.md](./ROADMAP.md). In short: if the single pilot resolves and prove
 ## 9. Links & Resources
 
 - **Frontend (live):** https://flowfi-btc.vercel.app/
-- **Testnet registry:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry?chain=testnet))
-- **Testnet escrow:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow?chain=testnet))
+- **Testnet registry:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry?chain=testnet))  ([deployment-link](https://explorer.hiro.so/txid/0xf96f8a99dec13b87fef17cc6b7f77642a93a3dc05babe6ee263c65bd39ef2aa5?chain=testnet)) 
+- **Testnet escrow:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow?chain=testnet))  ([deployment-link](https://explorer.hiro.so/txid/0x291c96775ffbc9e5e4ca5ecd390cf451a3f0a07c565a4e4f2876afe07113c58b?chain=testnet)) 
 - **Testnet mock sBTC:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token?chain=testnet))
 - **Repository:** [https://github.com/FlowFi-BTC/FlowFi-BTC](https://github.com/FlowFi-BTC/FlowFi-BTC)
 - **Risk Disclosure:** [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)

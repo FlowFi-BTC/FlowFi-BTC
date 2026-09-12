@@ -25,10 +25,15 @@ check_checker = { trusted_sender = false, trusted_caller = false, callee_filter 
 
 [contracts.flowfi-registry]
 path = "contracts/flowfi-registry.clar"
-clarity_version = 5
+clarity_version = 3
 epoch = "latest"
 
 [contracts.flowfi-escrow]
 path = "contracts/flowfi-escrow.clar"
-clarity_version = 5
+clarity_version = 3
+epoch = "latest"
+
+[contracts.mock-sbtc-token]
+path = "contracts/mock/mock-sbtc-token.clar"
+clarity_version = 3
 epoch = "latest"

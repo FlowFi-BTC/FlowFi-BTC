@@ -99,3 +99,15 @@ This structure is chosen specifically to avoid securities- and crowdfunding-adja
 ## 7. Outcome Risk
 
 The pilot receivable may default rather than repay. **This is disclosed as a valid, informative, and reportable outcome** — not a failure condition for this grant. The deliverable is a completed, transparent financing cycle with an honestly reported result, whichever result that turns out to be.
+
+---
+
+## 8. Counterparty-Sourcing Risk (Downgraded)
+
+Earlier versions of this document flagged a timing risk: that a real Milestone 3 counterparty might not be secured in time. **This risk is now partially mitigated** — two candidate businesses and one candidate capital provider have expressed preliminary interest prior to any grant funding being received; see [PILOT_READINESS.md](./PILOT_READINESS.md). This is not a binding commitment (see that document's own disclaimer), so some residual timing risk remains — a lead expressing interest is not the same as a lead completing onboarding and verification on schedule — but the risk is meaningfully lower than "counterparties not yet identified."
+
+---
+
+## 9. If a Fixed Fee Is Added (Conditional, See `MILESTONE_PLAN.md`)
+
+If Milestone 1's stretch goal (a small fixed repayment fee, see `MILESTONE_PLAN.md`) is implemented, it is disclosed here as a **fee**, not interest or yield. Section 6's legal reasoning depends on this distinction: the crowdfunding/securities risk this pilot avoids comes from *publicly soliciting* a return from *multiple* retail funders, not from a single bilateral fixed fee agreed between two named counterparties. A fixed fee does not change the structure described in Section 6 — one business, one provider, no public solicitation, no pooled funds — it only gives the provider a small, flat, pre-agreed incentive beyond goodwill. If this stretch goal is not completed in time, the pilot proceeds at 0% fee, which remains a fully valid and reportable outcome.

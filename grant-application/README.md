@@ -10,6 +10,7 @@
 |---|---|
 | [PROJECT_OVERVIEW.md](../README.md) | Product-level overview — the problem, the solution, how it works, what it isn't (repo-root README) |
 | [APPLICATION_NARRATIVE.md](./APPLICATION_NARRATIVE.md) | Main grant application — problem statement, solution, progress, vision |
+| [PILOT_READINESS.md](./PILOT_READINESS.md) | Evidence that Milestone 3's counterparties are real leads, not hypothetical — business and capital-provider interest, redacted where needed |
 | [MILESTONE_PLAN.md](./MILESTONE_PLAN.md) | Detailed 3-milestone execution plan with deliverables and success metrics |
 | [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md) | Contract architecture, frontend stack, verification flow, data flow diagrams |
 | [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) | Internal security self-review — authorization, custody, token conservation, known limitations |
@@ -29,7 +30,7 @@
 | **Track** | Getting Started Program |
 | **Funding Request** | $10,000 |
 | **Timeline** | ~10–12 weeks (3 milestones) |
-| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite scaffolding in place (Milestone 1 target: 40–60 tests) |
+| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite scaffolding in place (Milestone 1 target: 40–60 tests); **2 business counterparties and 1 potential capital provider identified for Milestone 3 — see [PILOT_READINESS.md](./PILOT_READINESS.md)** |
 | **Key Technology** | Clarity 5, sBTC (SIP-010, structural trait), Stacks Connect, two-contract architecture (`flowfi-registry` owns state, `flowfi-escrow` owns money) |
 | **Frontend (live)** | https://flowfi-btc.vercel.app/ |
 
@@ -51,7 +52,7 @@ Verify on Stacks Explorer (testnet), e.g.:
 - `https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow?chain=testnet`
 - `https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token?chain=testnet`
 
-> Post-deploy wiring (required, in order): deploy `flowfi-registry` first (escrow references `.flowfi-registry` statically), then deploy `flowfi-escrow`, then call `registry.set-escrow-contract` with the escrow principal, then call `escrow.set-sbtc-contract` with the mock-sBTC principal on testnet. Until `set-escrow-contract` is called, `mark-funded` / `mark-repaid` / `mark-defaulted` are unreachable by design (`escrow-contract` defaults to `none`). The escrow's `sbtc-contract` defaults to the **mainnet** sBTC principal and must be repointed on testnet.
+> Post-deploy wiring (required, in order): deploy `flowfi-registry` first (escrow references `.flowfi-registry` statically), then deploy `flowfi-escrow`, then call `registry.set-escrow-contract` with the escrow principal, then call `escrow.set-sbtc-contract` with the mock-sBTC principal on testnet. Until `set-escrow-contract` is called, `mark-funded` / `mark-repaid` / `mark-defaulted` are unreachable by design (`escrow-contract` defaults to `none`). The escrow's `sbtc-contract` defaults to the **mainnet** sBTC principal (`SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token` — verified against current Stacks/Hiro documentation) and must be repointed on testnet only. **On mainnet, `set-sbtc-contract` should never be called** — see `TECHNICAL_ARCHITECTURE.md`.
 
 ---
 
