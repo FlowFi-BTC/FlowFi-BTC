@@ -13,7 +13,7 @@ Before any grant activity begins, FlowFi BTC already has:
 | `flowfi-escrow.clar` (257 lines) | Deployed to testnet — 6 public functions, 4 read-only functions |
 | `mock-sbtc-token.clar` (161 lines) | Deployed to testnet — SIP-010 test stand-in for sBTC (admin mint + daily faucet) |
 | Test suite | 46 passing tests across 2 suites (26 registry + 20 escrow, Clarinet SDK v3.9.0 + Vitest 3.2.7) |
-| Frontend (21 pages) | Live on Vercel — all 7 contract interactions wired via prepare → sign → confirm → poll |
+| Frontend (21 pages) | Live on Vercel — all 7 contract interactions wired via prepare → sign → confirm → poll (built but under active polish; minor inconsistencies possible — M1 Deliverable 1.4 commits frontend testing and UI fixes) |
 | Express.js API | 11 routers (auth, onboarding, businesses, investors, receivables, marketplace, verification, fundings, transactions, escrows, dashboards) for queries and transaction building |
 | Wallet integration | Leather + Xverse via @stacks/connect |
 
@@ -42,8 +42,9 @@ The existing 46 tests cover the happy paths and key rejections well (duplicate r
 - No formal invariant documentation
 - No independent review by anyone outside the project
 - No formal deployment checklist or RC tag in the repository
+- No systematic frontend testing — the 21-page frontend is built and live but has never had a full QA pass, so minor inconsistencies (stale routes, wrong status displays, dead links) are possible
 
-All four of these gaps are addressed in this milestone.
+All five of these gaps are addressed in this milestone.
 
 ---
 
@@ -115,6 +116,22 @@ A release candidate means the contracts are finalized and every step of the main
 
 ---
 
+### Deliverable 1.4 — Frontend Testing and UI Fixes
+
+**Target: Full QA pass over all 21 pages; every reported inconsistency fixed; clean production build**
+
+The contracts get harder to change after mainnet — the frontend gets harder to trust if reviewers hit broken pages. This deliverable treats the frontend with the same rigor as the contracts, before anyone is asked to rely on it in M2/M3.
+
+**Scope:**
+1. **Page-by-page QA sweep** — every route opened in both roles (business + investor) plus logged-out: landing, marketplace explorer, receivable detail, all dashboard pages, onboarding, verification, transparency log, admin surface. Each page checked against `FRONTEND_API_DOCS.md` for the endpoints it should call.
+2. **Fix pass** — stale routes and dead links removed or redirected, wrong status vocabularies corrected (receivable vs funding vs transaction lifecycles are never mixed), wallet-aware buttons gated to the right role, friendly error messages instead of raw codes.
+3. **Build gate** — `tsc` typecheck and `vite build` pass clean with zero errors before the milestone closes.
+4. **Fix log published** — a short `FRONTEND_QA.md` in the repository listing every inconsistency found, what was fixed, and what was deliberately deferred (with reasons).
+
+**Success metric:** `tsc` + `vite build` green, `FRONTEND_QA.md` published, and zero known broken routes at milestone close.
+
+---
+
 ### Milestone 1 — Evidence Submission
 
 | Evidence Item | Format |
@@ -123,6 +140,7 @@ A release candidate means the contracts are finalized and every step of the main
 | Coverage summary | Markdown table of invariants tested with pass/fail |
 | `SECURITY_REVIEW.md` | Published in repository — public URL |
 | RC release tag | GitHub release link (`v1.0.0-rc1`) |
+| `FRONTEND_QA.md` + clean build | Published fix log plus `tsc`/`vite build` log showing zero errors |
 
 ---
 
@@ -134,7 +152,7 @@ A release candidate means the contracts are finalized and every step of the main
 | CI/CD pipeline (GitHub Actions) | $0 | GitHub Actions free tier covers this |
 | Clarinet tooling | $0 | Open-source |
 | Hosting (Vercel + API) | $40 | 1 month of staging hosting pre-mainnet |
-| Developer time (test writing + review) | ~$1,600 | Core time allocation — 2–3 weeks of focused work |
+| Developer time (contract tests + review + frontend QA/fixes) | ~$1,600 | Core time allocation — 2–3 weeks of focused work, incl. Deliverable 1.4 |
 | Contingency | $160 | Buffer for unexpected tooling or testnet STX needs |
 | **Total** | **$2,000** | |
 

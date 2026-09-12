@@ -63,7 +63,7 @@ Live on Stacks testnet today — deployer `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCS
 
 ## 3. Current Progress (Proof of Concept)
 
-I have a working MVP deployed to Stacks testnet with a fully functional frontend. This is not an idea — it is a built product.
+I have a working MVP deployed to Stacks testnet with a built frontend. This is not an idea — it is a built product. The frontend is functional but still under active polish: minor inconsistencies are possible, and Milestone 1 explicitly includes frontend testing and UI fixes (see MILESTONE_PLAN.md Deliverable 1.4).
 
 ### Smart Contracts (Deployed to Testnet)
 
@@ -91,6 +91,7 @@ Built with Clarinet SDK v3.9.0 + Vitest 3.2.7 (`vitest-environment-clarinet`)
 21 pages across landing, public marketplace explorer, receivable detail (wallet-aware), business dashboard (overview / receivables / submit / funding / settings), investor dashboard (overview / fundings / funding-detail), onboarding, business verification, transparency log, and admin surface — live at https://flowfi-btc.vercel.app/
 Full wallet integration (Leather & Xverse via `@stacks/connect`)
 All 7 contract interactions wired through backend `prepare → sign → confirm → poll`: register-business, verify-business (verifier session), register-receivable, fund-receivable, release-funds (admin), repay-receivable, mark-default (admin; MVP off-chain flag pending on-chain wiring)
+Honest caveat: the frontend is built and live but still being polished — minor inconsistencies (stale routes, wrong status displays, dead links) are possible. Frontend testing and UI fixes are a committed Milestone 1 deliverable, so what reviewers click in M2/M3 is verified, not assumed.
 Off-chain API layer (11 routers: auth, onboarding, businesses, investors, receivables, marketplace, verification, fundings, transactions, escrows, dashboards) connects verification data, invoice SHA-256 evidence, and `operationId` + `Idempotency-Key` flows to the frontend and contract calls
 
 ---
