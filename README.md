@@ -44,7 +44,7 @@ A business completes verification once. Once verified, it can register a receiva
 
 ### 1. Business Registration & Verification
 
-A business connects its Stacks wallet, registers, and completes verification — for this pilot, a demo-stage Manual Pilot Review, or a completed third-party KYB integration if that path finishes in time (see [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)). The result is recorded on-chain as a status, method, and level, alongside a hash of the underlying evidence.
+A business connects its Stacks wallet, registers, and completes verification — for this pilot, a demo-stage Manual Pilot Review, or a completed third-party KYB integration if that path finishes in time (see [RISK_DISCLOSURE.md](./grant-application/RISK_DISCLOSURE.md)). The result is recorded on-chain as a status, method, and level, alongside a hash of the underlying evidence.
 
 ### 2. Receivable Registration
 
@@ -60,7 +60,7 @@ Once funding is confirmed, the escrow contract releases the funds to the busines
 
 ### 5. Repayment or Default
 
-Repayment happens either directly on-chain in sBTC, or through confirmed off-chain fiat settlement reflected on-chain — see the Repayment Boundary section in [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md) for why this distinction exists and how it's handled honestly. If the due date passes without repayment, the receivable is marked defaulted — a recorded, transparent outcome, not a resolved dispute.
+Repayment happens either directly on-chain in sBTC, or through confirmed off-chain fiat settlement reflected on-chain — see the Repayment Boundary section in [RISK_DISCLOSURE.md](./grant-application/RISK_DISCLOSURE.md) for why this distinction exists and how it's handled honestly. If the due date passes without repayment, the receivable is marked defaulted — a recorded, transparent outcome, not a resolved dispute.
 
 ---
 
@@ -95,14 +95,14 @@ Full detail, including data models and function signatures, in [TECHNICAL_ARCHIT
 | Demo verification flow | Built |
 | Off-chain API layer | Built |
 | Frontend (dashboard + public receivable page) | Built |
-| Test suite | In progress toward Milestone 1 target |
-| Security self-review | See [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) |
+| Test suite | Done — 46/46 passing (26 registry + 20 escrow + 2 integration paths) |
+| Security self-review | See [SECURITY_REVIEW.md](./grant-application/SECURITY_REVIEW.md) |
 
 ---
 
 ## Links
 
 - **Repository:** https://github.com/FlowFi-BTC/FlowFi-BTC
-- **Grant Application:** [APPLICATION_NARRATIVE.md](./APPLICATION_NARRATIVE.md)
-- **Risk Disclosure:** [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md)
-- **Roadmap:** [ROADMAP.md](./ROADMAP.md)
+- **Grant Application:** [APPLICATION_NARRATIVE.md](./grant-application/APPLICATION_NARRATIVE.md)
+- **Risk Disclosure:** [RISK_DISCLOSURE.md](./grant-application/RISK_DISCLOSURE.md)
+- **Roadmap:** [ROADMAP.md](./grant-application/ROADMAP.md)

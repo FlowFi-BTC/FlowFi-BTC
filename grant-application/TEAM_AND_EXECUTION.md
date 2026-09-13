@@ -19,7 +19,7 @@ FlowFi BTC is not a whitepaper-stage idea. The following exists today, before an
  
 | Component | Detail |
 |---|---|
-| Contract architecture + implementation | Two-contract design (`flowfi-registry` v1.0.0 + `flowfi-escrow` v1.0.0, Clarity 5) fully specified **and implemented**, including exact data models, burn-height state machines, and permission model — see `TECHNICAL_ARCHITECTURE.md`; deployed to testnet (`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry`, `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow`) with test-only `mock-sbtc-token` (`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`) |
+| Contract architecture + implementation | Two-contract design (`flowfi-registry` v1.0.0 + `flowfi-escrow` v1.0.0, Clarity 3) fully specified **and implemented**, including exact data models, burn-height state machines, and permission model — see `TECHNICAL_ARCHITECTURE.md`; deployed to testnet (`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry`, `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow`) with test-only `mock-sbtc-token` (`ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token`) |
 | Demo verification flow | Built and functioning — produces a normalized, hashable verification record regardless of underlying verification source |
 | Off-chain API layer | Built — connects verification data to the frontend and prepares contract-call parameters |
 | Frontend (live) | https://flowfi-btc.vercel.app/ — business dashboard and receivable-detail views functional against the deployed contracts |

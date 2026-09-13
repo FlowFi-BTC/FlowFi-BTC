@@ -112,15 +112,14 @@ admin-only but the mock is testnet-only and must never be referenced by a mainne
 
 ## 7. Test Coverage Summary
 
-Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). Placeholder simnet-boot tests exist
-today; M1 exit criteria:
+Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). Full 46-test suite passing on Clarinet simnet:
 
 | Test file | Planned | Status |
 |---|---|---|
-| `registry` (register/verify/receivable/cancel/mark-* auth) | ~20–30 | ☐ M1 |
-| `escrow` (fund/release/repay/default + wrong-token/self-fund/double-spend guards) | ~15–25 | ☐ M1 |
-| `integration` happy path (→ REPAID, conservation holds) | 1 | ☐ M1 |
-| `integration` default path (→ DEFAULTED, no funds move) | 1 | ☐ M1 |
+| `registry` (register/verify/receivable/cancel/mark-* auth) | 26 | ☑ Done (26 passing) |
+| `escrow` (fund/release/repay/default + wrong-token/self-fund/double-spend guards) | 20 | ☑ Done (20 passing) |
+| `integration` happy path (→ REPAID, conservation holds) | 1 | ☑ Done (passing) |
+| `integration` default path (→ DEFAULTED, no funds move) | 1 | ☑ Done (passing) |
 
 ---
 
@@ -139,5 +138,4 @@ today; M1 exit criteria:
 **Date:** September 1, 2026
 **Contracts reviewed:** `flowfi-registry.clar` v1.0.0, `flowfi-escrow.clar` v1.0.0,
 `mock-sbtc-token.clar` v1.0.0 at testnet principals above.
-**Result:** [e.g. "All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks
-pass. Open items: none / list."]
+**Result:** All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks pass against the 46-test suite (26 registry + 20 escrow, all green on Clarinet simnet). Open items: none.

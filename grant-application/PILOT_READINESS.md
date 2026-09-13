@@ -24,6 +24,8 @@ Several businesses have been contacted about participating in the pilot by provi
 
 Outreach to potential sBTC capital providers is underway. No provider has been confirmed yet — this is an open item being actively worked, not yet resolved. Securing a real, willing provider before or during Milestone 3 remains a dependency of this grant (see `RISK_DISCLOSURE.md` §8).
 
+**Fallback Plan:** If no external capital provider materializes by Week 10, the team will execute a fallback plan — extending the outreach window, seeking a smaller-ticket provider, or utilizing internal sBTC funding to execute and verify the full on-chain lifecycle on mainnet so grant delivery and evaluation are not stalled.
+
 ---
 
 ## Pilot Status

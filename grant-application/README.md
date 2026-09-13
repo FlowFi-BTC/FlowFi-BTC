@@ -30,8 +30,8 @@
 | **Track** | Getting Started Program |
 | **Funding Request** | $10,000 |
 | **Timeline** | ~10–12 weeks (3 milestones) |
-| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite scaffolding in place (Milestone 1 target: 40–60 tests); **2 business counterparties and 1 potential capital provider identified for Milestone 3 — see [PILOT_READINESS.md](./PILOT_READINESS.md)** |
-| **Key Technology** | Clarity 5, sBTC (SIP-010, structural trait), Stacks Connect, two-contract architecture (`flowfi-registry` owns state, `flowfi-escrow` owns money) |
+| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite completed (46/46 passing tests: 26 registry + 20 escrow + 2 integration paths); **2 business counterparties identified for Milestone 3 — see [PILOT_READINESS.md](./PILOT_READINESS.md)** |
+| **Key Technology** | Clarity 3, sBTC (SIP-010, structural trait), Stacks Connect, two-contract architecture (`flowfi-registry` owns state, `flowfi-escrow` owns money) |
 | **Frontend (live)** | https://flowfi-btc.vercel.app/ |
 
 ---

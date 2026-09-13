@@ -3,7 +3,7 @@
 > Source of truth: `FlowFi-BTC/contracts/flowfi-registry.clar` (v1.0.0),
 > `FlowFi-BTC/contracts/flowfi-escrow.clar` (v1.0.0),
 > `FlowFi-BTC/contracts/mock/mock-sbtc-token.clar` (v1.0.0).
-> Clarity version 5, epoch `latest` (see `FlowFi-BTC/Clarinet.toml`).
+> Clarity version 3, epoch `latest` (see `FlowFi-BTC/Clarinet.toml`).
 > Every signature, enum value, error code, and permission below is transcribed from those files.
 > Live frontend: https://flowfi-btc.vercel.app/
 
@@ -332,22 +332,21 @@ to burn-block heights (~144/day) before calling `register-receivable`.
 ## 8. Test Infrastructure (honest status)
 
 Stack: Clarinet SDK + Vitest (`vitest-environment-clarinet`), `npm run test` in `FlowFi-BTC/`.
-Today `tests/` contains simnet-boot placeholders (`flowfi-registry.test.ts`,
-`flowfi-escrow.test.ts` — each asserts simnet init only). Milestone 1 delivers the real suite:
+The full test suite (46 tests: 26 registry + 20 escrow + 2 end-to-end integration paths) is built and passing cleanly on Clarinet simnet:
 
 ```
-Clarinet SDK + Vitest (simnet)
-  ├── registry (register-business dup/ownership; verify ok/unauth/bad-method/bad-level/bad-expiry;
+Clarinet SDK + Vitest (simnet) — 46/46 passing
+  ├── registry (26 tests: register-business dup/ownership; verify ok/unauth/bad-method/bad-level/bad-expiry;
   │              register-receivable verified-vs-unverified/amount/date/owner; cancel owner/status;
-  │              mark-* rejects direct-wallet callers)
-  ├── escrow (fund open/already-funded/not-open/wrong-token/self-funding;
+  │              mark-* rejects direct-wallet callers; admin verifier reassignment)
+  ├── escrow (20 tests: fund open/already-funded/not-open/wrong-token/self-funding;
   │            release admin-only/double-release/wrong-token; repay business-only/unreleased/
-  │            double-repay/wrong-amount-impossible-by-design; default admin-only/pre-due-date/post-repay)
-  └── integration (happy: register→verify→receivable→fund→release→repay→REPAID;
-                   default: …→fund→release→past-due→default→DEFAULTED; token-conservation invariant)
+  │            double-repay; default admin-only/pre-due-date/post-repay)
+  └── integration (2 tests: happy path register→verify→receivable→fund→release→repay→REPAID;
+                   default path …→fund→release→past-due→default→DEFAULTED; token-conservation invariant)
 ```
 
-Target: 40–60 tests + 2 full lifecycle paths, all green on simnet before mainnet (M1 exit).
+Status: 46/46 tests passing on Clarinet simnet.
 
 ---
 

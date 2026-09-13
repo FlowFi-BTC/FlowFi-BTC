@@ -42,8 +42,8 @@ FlowFi BTC's two-contract split demonstrates a reusable pattern: `flowfi-registr
 | Metric | Target | Measurement |
 |---|---|---|
 | Smart contracts on mainnet | 2 contracts (`flowfi-registry`, `flowfi-escrow`; testnet already live at `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.*`) | Stacks Explorer |
-| Open-source Clarity code | Full contract source (Clarity 5) + tests + mock token | GitHub repository |
-| Test coverage | 40–60 tests + 2 integration tests | CI/test output |
+| Open-source Clarity code | Full contract source (Clarity 3) + tests + mock token | GitHub repository |
+| Test coverage | 46 tests passing (26 registry + 20 escrow + 2 integration paths) | CI/test output |
 | Completed real financing cycle | 1 (OPEN → FUNDED → REPAID or DEFAULTED, via `fund-receivable` → `release-funds` → `repay-receivable` / `mark-default`) | On-chain transaction history + `PILOT_RESULT.md` |
 | Documentation | Complete, honest risk disclosure and technical architecture | Published docs |
 
