@@ -12,37 +12,17 @@ The pilot scope is intentionally limited to:
 - One funding transaction
 - One repayment event
 
-This document exists to show reviewers that Milestone 3 is not hypothetical — real counterparties have already been contacted, and at least one on each side has expressed preliminary interest, ahead of any grant funding being received.
+This document exists to show reviewers that Milestone 3 outreach is already underway, not deferred until after funding arrives.
 
 ---
 
-## Business Interest
+## Business Outreach
 
-Two Nigerian SMEs have expressed preliminary interest in participating in the pilot by providing a real receivable for testing purposes. One will be selected for the actual Milestone 3 pilot based on readiness (verification-ready documentation, invoice availability, and timeline fit) at that stage — this is disclosed as risk mitigation (a fallback if one falls through), not an expansion of scope. The grant deliverable remains one receivable, one business.
+Several businesses have been contacted about participating in the pilot by providing a real receivable for testing purposes. Two have expressed preliminary interest so far. Outreach is ongoing — the goal is to have more than one ready option going into Milestone 3, as a fallback in case one isn't ready in time, not to expand the pilot's scope beyond one receivable.
 
-Evidence is included in:
+## Capital Provider Outreach
 
-- `screenshots/business-interest-1.png` — [ADD SCREENSHOT: conversation/thread showing preliminary interest from Business 1]
-- `screenshots/business-interest-2.png` — [ADD SCREENSHOT: conversation/thread showing preliminary interest from Business 2]
-
-Sensitive information (contact details, exact company identity where the counterparty has not consented to be named) is redacted. If a business is comfortable being named publicly, replace the redacted reference below with their name:
-
-- Business 1: [NAME, IF NAMED — otherwise "Nigerian SME, logistics sector" or similar redacted description]
-- Business 2: [NAME, IF NAMED — otherwise redacted description]
-
----
-
-## Capital Provider Interest
-
-A potential capital provider has expressed preliminary interest in participating in the pilot, conditional on the project securing grant funding and reaching Milestone 3 readiness.
-
-Evidence is included in:
-
-- `screenshots/capital-provider-interest.png` — [ADD SCREENSHOT: conversation/thread showing preliminary interest from the capital provider]
-
-Sensitive information is redacted. If the provider is comfortable being named publicly:
-
-- Capital Provider: [NAME, IF NAMED — otherwise "individual sBTC holder" or similar redacted description]
+Outreach to potential sBTC capital providers is underway. No provider has been confirmed yet — this is an open item being actively worked, not yet resolved. Securing a real, willing provider before or during Milestone 3 remains a dependency of this grant (see `RISK_DISCLOSURE.md` §8).
 
 ---
 
@@ -52,15 +32,14 @@ Current status, as of this application:
 
 - MVP development in progress (contracts implemented and deployed to testnet — see `TECHNICAL_ARCHITECTURE.md`)
 - API implementation underway (see `FRONTEND_API_DOCS.md`)
-- Counterparty outreach initiated and ongoing — 2 business leads, 1 capital-provider lead identified prior to any grant funding
+- Business-side counterparty outreach initiated: 2 of several contacted businesses have shown interest, more being pursued
+- Capital-provider outreach initiated, no provider secured yet
 - Final counterparty selection and formal onboarding scheduled for Milestone 3
 
 ---
 
 ## Important Note
 
-The materials in this directory are provided solely to demonstrate pilot feasibility and project readiness.
+This document is provided solely to demonstrate that pilot outreach is genuinely underway, not to assert that any agreement is in place.
 
-They do not constitute legally binding agreements, investment solicitations, lending offers, securities offerings, or crowdfunding activities. Participation remains subject to voluntary agreement by all parties, confirmed formally at Milestone 3.
-
-This is intentionally lightweight evidence — a letter of intent, a screenshotted thread, or a named willing participant — not a binding contract. The purpose is narrow: showing the reviewers releasing the final 50% tranche that a real recipient is lined up, not that one will be found after funding arrives.
+Nothing described here constitutes a legally binding agreement, investment solicitation, lending offer, securities offering, or crowdfunding activity. Participation by any party remains voluntary and would be confirmed formally at Milestone 3.

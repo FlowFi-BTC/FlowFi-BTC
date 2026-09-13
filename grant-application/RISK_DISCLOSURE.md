@@ -102,9 +102,9 @@ The pilot receivable may default rather than repay. **This is disclosed as a val
 
 ---
 
-## 8. Counterparty-Sourcing Risk (Downgraded)
+## 8. Counterparty-Sourcing Risk (Partially Mitigated, Not Resolved)
 
-Earlier versions of this document flagged a timing risk: that a real Milestone 3 counterparty might not be secured in time. **This risk is now partially mitigated** — two candidate businesses and one candidate capital provider have expressed preliminary interest prior to any grant funding being received; see [PILOT_READINESS.md](./PILOT_READINESS.md). This is not a binding commitment (see that document's own disclaimer), so some residual timing risk remains — a lead expressing interest is not the same as a lead completing onboarding and verification on schedule — but the risk is meaningfully lower than "counterparties not yet identified."
+Earlier versions of this document flagged a timing risk: that real Milestone 3 counterparties might not be secured in time. **This risk is partially mitigated on the business side only** — two of several contacted businesses have shown preliminary interest prior to any grant funding being received; see [PILOT_READINESS.md](./PILOT_READINESS.md). **On the capital-provider side, this risk remains open** — outreach is underway but no provider has been secured as of this application. Business interest is not the same as a completed, verified, on-schedule pilot, and a provider still needs to be found — this section will be updated again once either side firms up further.
 
 ---
 

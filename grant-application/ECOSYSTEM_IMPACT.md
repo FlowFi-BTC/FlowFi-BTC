@@ -55,7 +55,7 @@ FlowFi BTC's two-contract split demonstrates a reusable pattern: `flowfi-registr
 | Verification providers integrated | Formalized third-party KYB (if not completed during grant) | Verification records |
 | Developer interest | Any external interest in the open-source pattern | GitHub activity |
 
-Early counterparty outreach for this application already surfaced two interested businesses against a one-receivable pilot slot (see [PILOT_READINESS.md](./PILOT_READINESS.md)), suggesting demand may exceed a single pilot once the mechanism is proven.
+Early business outreach for this application already surfaced two interested businesses against a one-receivable pilot slot (see [PILOT_READINESS.md](./PILOT_READINESS.md)), suggesting demand may exceed a single pilot once the mechanism is proven. Capital-provider-side demand is not yet demonstrated the same way.
 
 ---
 
