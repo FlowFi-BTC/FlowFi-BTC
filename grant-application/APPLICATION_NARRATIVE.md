@@ -108,21 +108,9 @@ See [MILESTONE_PLAN.md](./MILESTONE_PLAN.md) for full detail.
 
 ---
 
-## 5. Budget Breakdown (Summary)
 
-See [BUDGET_PROPOSAL.md](./BUDGET_PROPOSAL.md) for full detail.
 
-**Requested Amount: $10,000**
-
-| Category | Amount | % |
-|---|---|---|
-| Contract hardening, testing, verification | $4,000 | 40% |
-| Mainnet launch, frontend, documentation | $3,500 | 35% |
-| Real pilot execution and reporting | $2,500 | 25% |
-
----
-
-## 6. Ecosystem Impact
+## 5. Ecosystem Impact
 
 See [ECOSYSTEM_IMPACT.md](./ECOSYSTEM_IMPACT.md) for detailed analysis. In summary, FlowFi BTC:
 
@@ -132,19 +120,19 @@ See [ECOSYSTEM_IMPACT.md](./ECOSYSTEM_IMPACT.md) for detailed analysis. In summa
 
 ---
 
-## 7. Team & Execution Capability
+## 6. Team & Execution Capability
 
 See [TEAM_AND_EXECUTION.md](./TEAM_AND_EXECUTION.md).
 
 ---
 
-## 8. Long-Term Vision
+## 7. Long-Term Vision
 
 See [ROADMAP.md](./ROADMAP.md). In short: if the single pilot resolves and proves the mechanism, the natural next step is additional receivables with additional counterparties, and eventually a pluggable verification layer supporting multiple attestation sources. Any move toward multi-provider or public funding is explicitly deferred pending proper legal review — it is not part of this grant.
 
 ---
 
-## 9. Links & Resources
+## 8. Links & Resources
 
 - **Frontend (live):** https://flowfi-btc.vercel.app/
 - **Testnet registry:** `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` ([explorer](https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry?chain=testnet))  ([deployment-link](https://explorer.hiro.so/txid/0xf96f8a99dec13b87fef17cc6b7f77642a93a3dc05babe6ee263c65bd39ef2aa5?chain=testnet)) 
