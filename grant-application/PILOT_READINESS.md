@@ -32,8 +32,8 @@ Outreach to potential sBTC capital providers is underway. No provider has been c
 
 Current status, as of this application:
 
-- MVP development in progress (contracts implemented and deployed to testnet — see `TECHNICAL_ARCHITECTURE.md`)
-- API implementation underway (see `FRONTEND_API_DOCS.md`)
+- MVP development in progress (contracts implemented and deployed to testnet — see [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md))
+- API and frontend integration built (see [APPLICATION_NARRATIVE.md](./APPLICATION_NARRATIVE.md) and [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md))
 - Business-side counterparty outreach initiated: 2 of several contacted businesses have shown interest, more being pursued
 - Capital-provider outreach initiated, no provider secured yet
 - Final counterparty selection and formal onboarding scheduled for Milestone 3

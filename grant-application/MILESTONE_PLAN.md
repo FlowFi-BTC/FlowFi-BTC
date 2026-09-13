@@ -37,7 +37,7 @@ Explicitly deferred (see [ROADMAP.md](./ROADMAP.md), not built in this grant):
 | `flowfi-registry` finalized | Business registration (one per wallet), verifier-gated verification (status/method/level enums + lazy expiry + `buff-32` hashes), receivable registration and lifecycle state; `mark-funded`/`mark-repaid`/`mark-defaulted` restricted to the wired escrow via `contract-caller` |
 | `flowfi-escrow` finalized | `fund-receivable` (provider ≠ business, exact registry amount), admin-only `release-funds`, business-only `repay-receivable` (flat, atomic), admin-only `mark-default` (past burn-height due-date); SIP-010 structural trait + wrong-token guard; no custody outside documented paths. **Stretch goal, if runway allows:** replace the flat `funding-amount` repayment with a single `repayment-amount` field equal to `funding-amount` plus a small fixed fee (not compounding interest, no rate schedule, no oracle) — see note below |
 | `mock-sbtc-token` (testnet) | Admin `mint` + self-serve `claim-daily-sbtc` (100 sBTC / 144 burn-blocks, 8 decimals); live at `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token` |
-| Test suite | 40–60 tests across both contracts plus two integration tests (placeholders exist today; suite lands in M1) |
+| Test suite | 46 tests across both contracts plus two integration tests (completed and passing: 26 registry + 20 escrow + 2 integration paths) |
 | Two full integration tests | (1) full happy path: register → verify → register receivable → fund → release → repay → REPAID. (2) default path: register → verify → register receivable → fund → release → due date passes → admin default → DEFAULTED |
 | Verification path finalized | Either a completed third-party KYB integration, or the documented Manual Pilot Review fallback — both produce a normalized, on-chain-hashed verification record so the contract layer doesn't change either way |
 | Security self-review | Completed against [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) — authorization on every mutating function, `tx-sender` vs. `contract-caller` correctness, token conservation, correct status-transition guards |
@@ -45,7 +45,7 @@ Explicitly deferred (see [ROADMAP.md](./ROADMAP.md), not built in this grant):
 
 ### Success Metrics
 
-- [ ] 40+ tests passing on Clarinet simnet, 0 known failing edge cases
+- [x] 46 tests passing on Clarinet simnet (26 registry + 20 escrow + 2 integration paths), 0 known failing edge cases
 - [ ] Both integration tests (happy path and default path) passing end-to-end
 - [ ] Verification path produces a real, reviewable record for at least one test business
 - [ ] [SECURITY_REVIEW.md](./SECURITY_REVIEW.md) completed and published, with sign-off section filled in

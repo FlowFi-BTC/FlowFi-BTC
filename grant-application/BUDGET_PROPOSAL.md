@@ -17,7 +17,7 @@ This budget funds hardening a designed protocol, deploying it to mainnet, and ex
 | Line Item | Amount | Description |
 |---|---|---|
 | Contract development & hardening (`flowfi-registry` + `flowfi-escrow` ) | $900 | Finalizing implemented v1.0.0 contracts per the code-verified `TECHNICAL_ARCHITECTURE.md` (burn-height dates, `contract-caller` gates, SIP-010 guards) |
-| Test suite development | $600 | 40–60 tests across both contracts plus two integration tests (placeholders exist; suite lands in M1) |
+| Test suite expansion & hardening | $600 | 46 tests completed (26 registry + 20 escrow + 2 integration paths); funds edge-case hardening, simnet execution, and continuous integration maintenance |
 | Verification path integration | $500 | Either third-party KYB integration costs, or design/build of the documented manual review fallback |
 | **Tranche 1 Total** | **$2,000** | |
 

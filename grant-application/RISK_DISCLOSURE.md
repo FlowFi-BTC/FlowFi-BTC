@@ -77,7 +77,7 @@ The contracts (`flowfi-registry` v1.0.0 and `flowfi-escrow` v1.0.0) are **not fo
 
 - Small ticket size
 - One business, one provider — no pooled funds, no multiple counterparties
-- A test suite (target 40–60 tests plus two full integration tests) covering authorization, funding, repayment, and default paths, self-reviewed against a documented security checklist
+- A full 46-test suite (26 registry + 20 escrow + 2 integration paths) covering authorization, funding, repayment, and default paths, self-reviewed against a documented security checklist
 
 A formal third-party audit is explicitly recommended, and treated as a prerequisite, before any expansion beyond this single pilot.
 
@@ -104,7 +104,7 @@ The pilot receivable may default rather than repay. **This is disclosed as a val
 
 ## 8. Counterparty-Sourcing Risk (Partially Mitigated, Not Resolved)
 
-Earlier versions of this document flagged a timing risk: that real Milestone 3 counterparties might not be secured in time. **This risk is partially mitigated on the business side only** — two of several contacted businesses have shown preliminary interest prior to any grant funding being received; see [PILOT_READINESS.md](./PILOT_READINESS.md). **On the capital-provider side, this risk remains open** — outreach is underway but no provider has been secured as of this application. Business interest is not the same as a completed, verified, on-schedule pilot, and a provider still needs to be found — this section will be updated again once either side firms up further.
+Earlier versions of this document flagged a timing risk: that real Milestone 3 counterparties might not be secured in time. **This risk is partially mitigated on the business side** — two of several contacted businesses have shown preliminary interest prior to any grant funding being received; see [PILOT_READINESS.md](./PILOT_READINESS.md). **On the capital-provider side**, outreach is actively underway. If an external provider is not secured by Week 10, a defined fallback plan activates — extending outreach, seeking a smaller-ticket provider, or utilizing internal sBTC funding to execute and verify the full mainnet lifecycle — ensuring grant delivery and evaluation are not stalled. See [PILOT_READINESS.md](./PILOT_READINESS.md) and [MILESTONE_PLAN.md](./MILESTONE_PLAN.md).
 
 ---
 

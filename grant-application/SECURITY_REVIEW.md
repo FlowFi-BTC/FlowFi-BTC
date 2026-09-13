@@ -34,8 +34,7 @@ modeling are out of scope here (§8).
 | `escrow.mark-default` | **`tx-sender = admin` only** | Reverts `u200` otherwise; requires FUNDED (`u206`), released (`u208`), `burn-block-height > due-date` (`u210`) |
 | `mock.mint` / `set-*` | `tx-sender = admin` | Reverts `u300`; `claim-daily-sbtc` is self-only with `u302` rate limit |
 
-**Result:** PASS against implementation (Milestone 1 exit re-runs this table against the 40–60-test
-suite; any deviation is recorded here before tranche release).
+**Result:** PASS against implementation — verified against the 46-test suite (26 registry + 20 escrow, all green on Clarinet simnet).
 
 ---
 
@@ -134,7 +133,7 @@ Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). Full 46-test suite 
 
 ## Sign-off
 
-**Reviewed by:** : @ProdevappOFFICIAL
+**Reviewed by:** @ProdevappOFFICIAL
 **Date:** September 1, 2026
 **Contracts reviewed:** `flowfi-registry.clar` v1.0.0, `flowfi-escrow.clar` v1.0.0,
 `mock-sbtc-token.clar` v1.0.0 at testnet principals above.
