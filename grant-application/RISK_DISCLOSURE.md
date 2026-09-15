@@ -27,7 +27,7 @@ Live references: frontend https://flowfi-btc.vercel.app/; testnet registry
 ## 2. Verification — What It Does and Doesn't Guarantee
 
 For this pilot, business and receivable verification is either:
-- A **demo-stage Manual Pilot Review**, where a named human reviewer checks business registration information and receivable evidence before registration is allowed, or
+- A **demo-stage Manual Pilot Review**, where a named human reviewer checks business registration information and receivable evidence before registration is allowed, optionally cross-checked against an independent public registry where one exists (see Section 8 for the pilot business's CAC registration), or
 - A **third-party KYB provider** (e.g., Persona), if that integration completes within the grant timeline.
 
 Both paths produce the same normalized on-chain record: verification status, method, level, timestamps, and a hash of the underlying evidence.
@@ -57,6 +57,15 @@ transfer), **v1.0.0 has no contract function that records that attestation** —
 in the pilot's off-chain process layer, not in `repay-receivable` (which always executes two SIP-010
 transfers). A future version can add an admin-attested confirmation path without changing the happy path.
 
+**Applied to pilot business selection:** The pilot business (Open Hive Innovations Ltd) was selected specifically because a technology company has materially better access to sBTC than a fiat-revenue business, directly reducing mechanical-default risk for this pilot.
+
+If a fiat-revenue fallback business (such as Uncle Tee's Schools) were onboarded instead, the pilot's ability to reach an on-chain `REPAID` state would depend on the business independently acquiring sBTC with fiat proceeds before the due date — a step the contract cannot verify, assist with, or compel. We distinguish two different failure modes for this pilot, and will report which one occurred, not conflate them:
+
+- **Mechanical default** — the business had the funds in a real-world sense (revenue was collected) but did not convert them to sBTC in time. This reflects a gap in the current repayment mechanism, not a credit failure.
+- **Credit default** — the business's debtor(s) did not pay as expected, so the business genuinely lacked the funds to repay at all.
+
+Prioritizing Open Hive Innovations Ltd directly mitigates mechanical-default risk for this pilot, while retaining Uncle Tee's Schools as a documented fallback.
+
 **This is disclosed explicitly because:** it is the honest boundary of what any receivables-financing smart contract can enforce, and it mirrors how comparable real-world-asset financing protocols handle the same on-chain/off-chain settlement gap. FlowFi BTC does not build or operate any fiat-to-sBTC exchange service, and does not intend to — that would introduce a separate, unrelated regulatory category (money transmission) that this pilot deliberately avoids.
 
 ---
@@ -68,6 +77,14 @@ calls `escrow.mark-default(receivable-id)` (reverts `u200` for non-admin, `u210`
 `u208` if never released), which calls `registry.mark-defaulted`.
 
 **What this does not do:** attempt any automated recovery, collection, or legal action. A recorded default is data — an honest, transparent outcome — not a resolved dispute. Recovery, if pursued at all for this pilot, would happen entirely off-chain and outside this grant's scope.
+
+**Liveness risk:** If the admin does not call `release-funds` after a receivable is funded,
+or does not call `mark-default` after a receivable passes its due date without repayment,
+the escrowed sBTC remains locked in the contract indefinitely with no automatic release.
+There is no time-lock in v1.0.0. For this single-pilot, single-operator deployment, the
+admin is the same person coordinating the transaction in real time, which eliminates the
+incentive misalignment that makes this dangerous at scale. A multisig admin or time-lock
+mechanism is a stated prerequisite before any expansion beyond this pilot.
 
 ---
 
@@ -102,12 +119,33 @@ The pilot receivable may default rather than repay. **This is disclosed as a val
 
 ---
 
-## 8. Counterparty-Sourcing Risk (Partially Mitigated, Not Resolved)
+## 8. Counterparty-Sourcing Risk (Business Side Named, Capital-Provider Side Open)
 
-Earlier versions of this document flagged a timing risk: that real Milestone 3 counterparties might not be secured in time. **This risk is partially mitigated on the business side** — two of several contacted businesses have shown preliminary interest prior to any grant funding being received; see [PILOT_READINESS.md](./PILOT_READINESS.md). **On the capital-provider side**, outreach is actively underway. If an external provider is not secured by Week 10, a defined fallback plan activates — extending outreach, seeking a smaller-ticket provider, or utilizing internal sBTC funding to execute and verify the full mainnet lifecycle — ensuring grant delivery and evaluation are not stalled. See [PILOT_READINESS.md](./PILOT_READINESS.md) and [MILESTONE_PLAN.md](./MILESTONE_PLAN.md).
+**Business side:** the primary pilot business is **Open Hive Innovations Ltd** (RC-9590869), a technology company selected because it has materially better access to sBTC than a fiat-revenue business, directly reducing mechanical-default risk. **Uncle Tee's Schools** (RC-1917924) is retained as a documented, CAC-verifiable fallback — see [PILOT_READINESS.md](./PILOT_READINESS.md) for the full outreach record.
+
+**Capital-provider side:** outreach is underway, primarily direct-message outreach to individual sBTC
+holders on X. No provider has been secured as of this application. This remains the single largest open
+dependency for Milestone 3.
+
+**No self-funding fallback exists.** An earlier draft of this document described a fallback in which the
+team's own funds could be used if no external provider was secured by a given point. That fallback has
+been removed entirely. Milestone 3 is satisfied only by an independent third-party sBTC provider
+completing the financing cycle. If no such provider is secured, Milestone 3 will be reported as
+incomplete in `PILOT_RESULT.md` rather than substituted with a self-funded transaction — a self-funded
+cycle would not actually test the thing this grant exists to prove, that an independent sBTC holder will
+finance a real-world receivable.
 
 ---
 
 ## 9. If a Fixed Fee Is Added (Conditional, See `MILESTONE_PLAN.md`)
 
 If Milestone 1's stretch goal (a small fixed repayment fee, see `MILESTONE_PLAN.md`) is implemented, it is disclosed here as a **fee**, not interest or yield. Section 6's legal reasoning depends on this distinction: the crowdfunding/securities risk this pilot avoids comes from *publicly soliciting* a return from *multiple* retail funders, not from a single bilateral fixed fee agreed between two named counterparties. A fixed fee does not change the structure described in Section 6 — one business, one provider, no public solicitation, no pooled funds — it only gives the provider a small, flat, pre-agreed incentive beyond goodwill. If this stretch goal is not completed in time, the pilot proceeds at 0% fee, which remains a fully valid and reportable outcome.
+
+---
+
+## 10. Admin Key — Single Wallet, No Multisig
+
+The admin for both `flowfi-registry` and `flowfi-escrow` is a single Stacks wallet
+controlled by the lead developer. There is no multisig. This is disclosed as a centralization
+risk, not presented as a feature. A multisig admin configuration is a named prerequisite
+before any deployment beyond this single pilot.
