@@ -18,7 +18,7 @@ Today, sBTC utility on Stacks is concentrated in DeFi lending, liquidity provisi
 
 FlowFi BTC's escrow-then-release model means:
 
-- No team-controlled wallet ever custodies user sBTC
+- No private key controlled by the team can redirect or withdraw escrowed sBTC — the contract can only release funds to the stored business address or the stored funder address (see RISK_DISCLOSURE.md §10)
 - Every state transition — funded, released, repaid, defaulted — is recorded on-chain and independently verifiable
 - The boundary between what the contract can enforce (fund movement, state transitions) and what it cannot (compelling real-world fiat repayment) is disclosed plainly rather than glossed over
 
