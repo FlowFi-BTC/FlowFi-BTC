@@ -29,8 +29,8 @@
 | **Project** | FlowFi BTC — Bitcoin-Native Receivables Financing Infrastructure |
 | **Track** | Getting Started Program |
 | **Funding Request** | $10,000 |
-| **Timeline** | ~10–12 weeks (3 milestones) |
-| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite completed (46/46 passing tests: 26 registry + 20 escrow + 2 integration paths); **2 business counterparties identified for Milestone 3 — see [PILOT_READINESS.md](./PILOT_READINESS.md)** |
+| **Timeline** | ~12 weeks (3 milestones); M1 by Oct 25 2026, M2 by Nov 22 2026, M3 by Dec 20 2026 — see `MILESTONE_PLAN.md` |
+| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite completed (46/46 passing tests: 26 registry + 20 escrow, including 2 full integration paths); **2 business counterparties identified for Milestone 3 — see [PILOT_READINESS.md](./PILOT_READINESS.md)** |
 | **Key Technology** | Clarity 3, sBTC (SIP-010, structural trait), Stacks Connect, two-contract architecture (`flowfi-registry` owns state, `flowfi-escrow` owns money) |
 | **Frontend (live)** | https://flowfi-btc.vercel.app/ |
 
@@ -52,18 +52,18 @@ Verify on Stacks Explorer (testnet), e.g.:
 - `https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-escrow?chain=testnet`
 - `https://explorer.hiro.so/address/ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.mock-sbtc-token?chain=testnet`
 
-> Post-deploy wiring (required, in order): deploy `flowfi-registry` first (escrow references `.flowfi-registry` statically), then deploy `flowfi-escrow`, then call `registry.set-escrow-contract` with the escrow principal, then call `escrow.set-sbtc-contract` with the mock-sBTC principal on testnet. Until `set-escrow-contract` is called, `mark-funded` / `mark-repaid` / `mark-defaulted` are unreachable by design (`escrow-contract` defaults to `none`). The escrow's `sbtc-contract` defaults to the **mainnet** sBTC principal (`SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token` — verified against current Stacks/Hiro documentation) and must be repointed on testnet only. **On mainnet, `set-sbtc-contract` should never be called** — see `TECHNICAL_ARCHITECTURE.md`.
+> Post-deploy wiring (required, in order): deploy `flowfi-registry` first (escrow references `.flowfi-registry` statically), then deploy `flowfi-escrow`, then call `registry.set-escrow-contract` with the escrow principal, then call `escrow.set-sbtc-contract` with the mock-sBTC principal on testnet. Until `set-escrow-contract` is called, `mark-funded` / `mark-repaid` / `mark-defaulted` are unreachable by design (`escrow-contract` defaults to `none`). The escrow's `sbtc-contract` defaults to the **mainnet** sBTC principal (`SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token` — verified against current Stacks/Hiro documentation) and is repointed on testnet only. **On mainnet, `set-sbtc-contract` will not exist at all** — it is removed from the contract source entirely before the Milestone 2 mainnet deployment, not merely left uncalled. See `TECHNICAL_ARCHITECTURE.md` and `MILESTONE_PLAN.md` (Milestone 2).
 
 ---
 
 ## What Sets This Application Apart
 
-1. **Narrow and honest, on purpose.** This is one real financing cycle — one verified business, one real sBTC provider, one receivable, resolved on-chain — not a marketplace or investment platform. The scope was deliberately cut down from a larger vision to keep legal and execution risk low for a first grant.
+1. **Narrow and honest, on purpose.** This is one real financing cycle — one verified business, one real, independent sBTC provider, one receivable, resolved on-chain — not a marketplace or investment platform. The scope was deliberately cut down from a larger vision to keep legal and execution risk low for a first grant.
 
 2. **A real, underserved sBTC use case.** sBTC utility today is concentrated in DeFi lending, liquidity, and trading. FlowFi BTC is a concrete answer to what sBTC can do in the real economy: financing a real, verifiable trade receivable.
 
 3. **Clean separation of concerns.** `flowfi-registry` owns identity, verification, and receivable state. `flowfi-escrow` owns sBTC custody, funding, and settlement. Neither contract does the other's job — see [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md). All dates are Bitcoin-anchored **burn-block heights**, not wall-clock timestamps.
 
-4. **Every limitation is named, not hidden.** Unaudited contract status, the manual-review verification fallback, and the reality that repayment may depend on off-chain fiat confirmation are all disclosed directly in [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md) — not discovered by a reviewer reading the code.
+4. **Every limitation is named, not hidden.** Unaudited contract status, the manual-review verification fallback, the reality that repayment may depend on the business independently acquiring sBTC, and the fact that no self-funding fallback exists for Milestone 3 are all disclosed directly in [RISK_DISCLOSURE.md](./RISK_DISCLOSURE.md) — not discovered by a reviewer reading the code.
 
-5. **Low execution risk, real deliverable.** The grant funds hardening, mainnet deployment, and executing one real transaction — not open-ended R&D on an unproven idea.
+5. **Low execution risk, real deliverable.** The grant funds hardening, mainnet deployment, and executing one real transaction with a genuine, independent third-party counterparty — not open-ended R&D on an unproven idea, and not a self-funded substitute for one.

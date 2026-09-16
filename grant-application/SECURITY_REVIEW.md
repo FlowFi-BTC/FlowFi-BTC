@@ -34,7 +34,7 @@ modeling are out of scope here (§8).
 | `escrow.mark-default` | **`tx-sender = admin` only** | Reverts `u200` otherwise; requires FUNDED (`u206`), released (`u208`), `burn-block-height > due-date` (`u210`) |
 | `mock.mint` / `set-*` | `tx-sender = admin` | Reverts `u300`; `claim-daily-sbtc` is self-only with `u302` rate limit |
 
-**Result:** PASS against implementation — verified against the 46-test suite (26 registry + 20 escrow, all green on Clarinet simnet).
+**Result:** PASS against implementation — verified against the 46-test suite (26 registry + 20 escrow, including 2 full integration paths, all green on Clarinet simnet).
 
 ---
 
@@ -92,6 +92,10 @@ balances; `mark-default` changes state only. The release recipient is always the
 `escrow.business`, so even the admin cannot redirect funds — only trigger timing. Mock `mint` is
 admin-only but the mock is testnet-only and must never be referenced by a mainnet escrow.
 
+**Update (Milestone 2 commitment):** `set-sbtc-contract` itself is removed from the contract source
+entirely before mainnet deployment, rather than left in place and simply never called. This closes
+the configuration surface completely rather than relying on operational discipline not to invoke it.
+
 **Check:** confirmed no balance-moving path besides the three documented transfers.
 
 ---
@@ -106,6 +110,7 @@ admin-only but the mock is testnet-only and must never be referenced by a mainne
 | No formal third-party audit | Bounded by single-counterparty pilot + full test suite; audit required before expansion | `RISK_DISCLOSURE.md` §5 |
 | Flat repayment (no interest/fee field) | MVP has no `repayment-amount`; economics handled off-chain for pilot | `TECHNICAL_ARCHITECTURE.md` §3.3 |
 | Admin-gated release/default (not permissionless) | MVP compliance hook; loosening changes timing only, never recipient | `TECHNICAL_ARCHITECTURE.md` §3.3 |
+| `set-sbtc-contract` exists in the testnet build reviewed here | Needed to repoint escrow at `mock-sbtc-token` during development | Scheduled for full removal from source before mainnet deployment — see `MILESTONE_PLAN.md` Milestone 2, not merely a runtime restriction |
 
 ---
 
@@ -113,12 +118,14 @@ admin-only but the mock is testnet-only and must never be referenced by a mainne
 
 Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). Full 46-test suite passing on Clarinet simnet:
 
-| Test file | Planned | Status |
+| Test file | Count | Status |
 |---|---|---|
 | `registry` (register/verify/receivable/cancel/mark-* auth) | 26 | ☑ Done (26 passing) |
-| `escrow` (fund/release/repay/default + wrong-token/self-fund/double-spend guards) | 20 | ☑ Done (20 passing) |
-| `integration` happy path (→ REPAID, conservation holds) | 1 | ☑ Done (passing) |
-| `integration` default path (→ DEFAULTED, no funds move) | 1 | ☑ Done (passing) |
+| `escrow` (fund/release/repay/default + wrong-token/self-fund/double-spend guards, **including 2 full end-to-end integration paths**: happy-path → REPAID, and past-due → DEFAULTED) | 20 | ☑ Done (20 passing) |
+| **Total** | **46** | ☑ All passing |
+
+Milestone 1 hardening work expands this to 70+ tests (additional boundary cases on amounts/dates,
+repeated-call sequencing, and admin-reassignment interactions) — see `MILESTONE_PLAN.md`.
 
 ---
 
@@ -137,4 +144,4 @@ Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). Full 46-test suite 
 **Date:** September 1, 2026
 **Contracts reviewed:** `flowfi-registry.clar` v1.0.0, `flowfi-escrow.clar` v1.0.0,
 `mock-sbtc-token.clar` v1.0.0 at testnet principals above.
-**Result:** All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks pass against the 46-test suite (26 registry + 20 escrow, all green on Clarinet simnet). Open items: none.
+**Result:** All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks pass against the 46-test suite (26 registry + 20 escrow, including 2 full integration paths, all green on Clarinet simnet). Open items: `set-sbtc-contract` removal, scheduled for Milestone 2, not yet executed as of this review.

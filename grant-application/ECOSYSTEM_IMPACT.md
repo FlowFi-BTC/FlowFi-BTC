@@ -43,8 +43,8 @@ FlowFi BTC's two-contract split demonstrates a reusable pattern: `flowfi-registr
 |---|---|---|
 | Smart contracts on mainnet | 2 contracts (`flowfi-registry`, `flowfi-escrow`; testnet already live at `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.*`) | Stacks Explorer |
 | Open-source Clarity code | Full contract source (Clarity 3) + tests + mock token | GitHub repository |
-| Test coverage | 46 tests passing (26 registry + 20 escrow + 2 integration paths) | CI/test output |
-| Completed real financing cycle | 1 (OPEN → FUNDED → REPAID or DEFAULTED, via `fund-receivable` → `release-funds` → `repay-receivable` / `mark-default`) | On-chain transaction history + `PILOT_RESULT.md` |
+| Test coverage | 46 tests passing today (26 registry + 20 escrow, including 2 full integration paths); expanding to 70+ during Milestone 1 hardening | CI/test output |
+| Completed real financing cycle | 1 (OPEN → FUNDED → REPAID or DEFAULTED, via `fund-receivable` → `release-funds` → `repay-receivable` / `mark-default`), with an independent, unaffiliated capital provider | On-chain transaction history + `PILOT_RESULT.md` |
 | Documentation | Complete, honest risk disclosure and technical architecture | Published docs |
 
 ### Medium-Term Impact (Post-Grant, If Pilot Succeeds)
@@ -55,7 +55,7 @@ FlowFi BTC's two-contract split demonstrates a reusable pattern: `flowfi-registr
 | Verification providers integrated | Formalized third-party KYB (if not completed during grant) | Verification records |
 | Developer interest | Any external interest in the open-source pattern | GitHub activity |
 
-Early business outreach for this application already surfaced two interested businesses against a one-receivable pilot slot (see [PILOT_READINESS.md](./PILOT_READINESS.md)), suggesting demand may exceed a single pilot once the mechanism is proven. Capital-provider-side demand is not yet demonstrated the same way.
+Early business outreach for this application already surfaced two interested businesses against a one-receivable pilot slot (see [PILOT_READINESS.md](./PILOT_READINESS.md)), suggesting demand may exceed a single pilot once the mechanism is proven. Capital-provider-side demand is not yet demonstrated the same way — as of this application, 5 individuals have been approached, 3 have responded, and 0 have committed.
 
 ---
 
