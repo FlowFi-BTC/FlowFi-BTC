@@ -34,7 +34,8 @@ modeling are out of scope here (§8).
 | `escrow.mark-default` | **`tx-sender = admin` only** | Reverts `u200` otherwise; requires FUNDED (`u206`), released (`u208`), `burn-block-height > due-date` (`u210`) |
 | `mock.mint` / `set-*` | `tx-sender = admin` | Reverts `u300`; `claim-daily-sbtc` is self-only with `u302` rate limit |
 
-**Result:** PASS against implementation — verified against the 46-test suite (26 registry + 20 escrow, including 2 full integration paths, all green on Clarinet simnet).
+**Result:** PASS against implementation (Milestone 1 exit re-runs this table against the 40–60-test
+suite; any deviation is recorded here before tranche release).
 
 ---
 
@@ -92,11 +93,13 @@ balances; `mark-default` changes state only. The release recipient is always the
 `escrow.business`, so even the admin cannot redirect funds — only trigger timing. Mock `mint` is
 admin-only but the mock is testnet-only and must never be referenced by a mainnet escrow.
 
-**Update (Milestone 2 commitment):** `set-sbtc-contract` itself is removed from the contract source
-entirely before mainnet deployment, rather than left in place and simply never called. This closes
-the configuration surface completely rather than relying on operational discipline not to invoke it.
-
 **Check:** confirmed no balance-moving path besides the three documented transfers.
+
+**Additional check (mainnet-specific):** `set-sbtc-contract` is being **removed from both contracts
+entirely** before mainnet deployment — a code change, not a runtime gate. The mainnet-deployed
+contracts will have `SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token` hardcoded, with no
+function able to repoint it post-deploy. This closes the custody-adjacent risk that a callable
+`set-sbtc-contract` would otherwise leave open, rather than merely disclosing it.
 
 ---
 
@@ -110,22 +113,22 @@ the configuration surface completely rather than relying on operational discipli
 | No formal third-party audit | Bounded by single-counterparty pilot + full test suite; audit required before expansion | `RISK_DISCLOSURE.md` §5 |
 | Flat repayment (no interest/fee field) | MVP has no `repayment-amount`; economics handled off-chain for pilot | `TECHNICAL_ARCHITECTURE.md` §3.3 |
 | Admin-gated release/default (not permissionless) | MVP compliance hook; loosening changes timing only, never recipient | `TECHNICAL_ARCHITECTURE.md` §3.3 |
-| `set-sbtc-contract` exists in the testnet build reviewed here | Needed to repoint escrow at `mock-sbtc-token` during development | Scheduled for full removal from source before mainnet deployment — see `MILESTONE_PLAN.md` Milestone 2, not merely a runtime restriction |
+| `set-sbtc-contract` remains callable post-deploy | Convenience for testnet iteration | **Resolved for mainnet:** removed from source entirely before Milestone 2 deployment, not merely gated — see this document §5 and `TECHNICAL_ARCHITECTURE.md` |
+| Single-admin key, no multisig; liveness risk if admin never calls `release-funds`/`mark-default` | Deliberate MVP simplification for a single-operator pilot | `RISK_DISCLOSURE.md` §10 — disclosed as a named prerequisite (multisig or time-lock) before any multi-provider expansion |
 
 ---
 
 ## 7. Test Coverage Summary
 
-Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). Full 46-test suite passing on Clarinet simnet:
+Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). Placeholder simnet-boot tests exist
+today; M1 exit criteria:
 
-| Test file | Count | Status |
+| Test file | Planned | Status |
 |---|---|---|
-| `registry` (register/verify/receivable/cancel/mark-* auth) | 26 | ☑ Done (26 passing) |
-| `escrow` (fund/release/repay/default + wrong-token/self-fund/double-spend guards, **including 2 full end-to-end integration paths**: happy-path → REPAID, and past-due → DEFAULTED) | 20 | ☑ Done (20 passing) |
-| **Total** | **46** | ☑ All passing |
-
-Milestone 1 hardening work expands this to 70+ tests (additional boundary cases on amounts/dates,
-repeated-call sequencing, and admin-reassignment interactions) — see `MILESTONE_PLAN.md`.
+| `registry` (register/verify/receivable/cancel/mark-* auth) | ~20–30 | ☐ M1 |
+| `escrow` (fund/release/repay/default + wrong-token/self-fund/double-spend guards) | ~15–25 | ☐ M1 |
+| `integration` happy path (→ REPAID, conservation holds) | 1 | ☐ M1 |
+| `integration` default path (→ DEFAULTED, no funds move) | 1 | ☐ M1 |
 
 ---
 
@@ -140,8 +143,9 @@ repeated-call sequencing, and admin-reassignment interactions) — see `MILESTON
 
 ## Sign-off
 
-**Reviewed by:** @ProdevappOFFICIAL
-**Date:** September 1, 2026
+**Reviewed by:** Oyewale Prudence ([@ProdevappOFFICIAL](https://github.com/ProdevappOFFICIAL))
+**Date:** [DATE — fill in when this review is actually completed against the final M1 test run]
 **Contracts reviewed:** `flowfi-registry.clar` v1.0.0, `flowfi-escrow.clar` v1.0.0,
 `mock-sbtc-token.clar` v1.0.0 at testnet principals above.
-**Result:** All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks pass against the 46-test suite (26 registry + 20 escrow, including 2 full integration paths, all green on Clarinet simnet). Open items: `set-sbtc-contract` removal, scheduled for Milestone 2, not yet executed as of this review.
+**Result:** [e.g. "All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks
+pass. Open items: none / list."]
