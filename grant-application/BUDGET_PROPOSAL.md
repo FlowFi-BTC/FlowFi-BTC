@@ -17,7 +17,7 @@ This budget funds hardening a designed protocol, deploying it to mainnet, and ex
 | Line Item | Amount | Description |
 |---|---|---|
 | Contract development & hardening (`flowfi-registry` + `flowfi-escrow` ) | $900 | Finalizing implemented v1.0.0 contracts per the code-verified `TECHNICAL_ARCHITECTURE.md` (burn-height dates, `contract-caller` gates, SIP-010 guards) |
-| Test suite expansion & hardening | $600 | 46 tests completed (26 registry + 20 escrow + 2 integration paths); funds edge-case hardening, simnet execution, and continuous integration maintenance |
+| Test suite expansion & hardening | $600 | 46 tests completed today (26 registry + 20 escrow, including 2 full integration paths); funds expanding this to 70+ tests (additional edge cases and fuzz-style boundary coverage), simnet execution, and continuous integration maintenance |
 | Verification path integration | $500 | Either third-party KYB integration costs, or design/build of the documented manual review fallback |
 | **Tranche 1 Total** | **$2,000** | |
 
@@ -25,8 +25,8 @@ This budget funds hardening a designed protocol, deploying it to mainnet, and ex
 
 | Line Item | Amount | Description |
 |---|---|---|
-| Mainnet deployment | $300 | Registry-first Clarinet mainnet deployment + `set-escrow-contract` wiring (testnet already live: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` / `.flowfi-escrow`); real sBTC default kept on mainnet |
-| Frontend development | $1,600 | Public receivable page + business dashboard on https://flowfi-btc.vercel.app/ (wallet signing, Hiro reads, burn-height date conversion) |
+| Mainnet deployment | $300 | Registry-first Clarinet mainnet deployment + `set-escrow-contract` wiring (testnet already live: `ST1WNVWY7WCJESTHM050RAMRRE44KJTKZKJCSRFCQ.flowfi-registry` / `.flowfi-escrow`); real sBTC address hardcoded, with `set-sbtc-contract` removed from the contract source entirely before this deployment (see `MILESTONE_PLAN.md` Milestone 2) |
+| Frontend development | $1,600 | Public receivable page + business dashboard on https://flowfi-btc.vercel.app/ (wallet signing, Hiro reads, burn-height date conversion); removal of all placeholder/demo content from the public site |
 | Documentation | $700 | README, risk disclosure, roadmap, technical architecture |
 | Initial hosting | $400 | Frontend hosting, domain, SSL for the pilot period |
 | **Tranche 2 Total** | **$3,000** | |
@@ -35,9 +35,9 @@ This budget funds hardening a designed protocol, deploying it to mainnet, and ex
 
 | Line Item | Amount | Description |
 |---|---|---|
-| Pilot coordination | $2,000 | Onboarding the real business and real capital provider, coordinating verification and the financing cycle |
+| Pilot coordination | $2,000 | Onboarding the real business and an independent, unaffiliated real capital provider, coordinating verification and the financing cycle |
 | Contingency for pilot execution issues | $1,000 | Buffer for counterparty delays, repayment-path complications, or verification process delays |
-| Outcome reporting and retrospective | $1,000 | Writing and publishing `PILOT_RESULT.md`, an honest account of what happened |
+| Outcome reporting and retrospective | $1,000 | Writing and publishing `PILOT_RESULT.md`, an honest account of what happened, including independence-disclosure evidence for the capital provider if a cycle completes |
 | Ecosystem outreach | $1,000 | Sharing results with the Stacks/sBTC community, documentation polish for future builders |
 | **Tranche 3 Total** | **$5,000** | |
 
