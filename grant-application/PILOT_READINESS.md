@@ -56,6 +56,18 @@ Current status, as of this application:
 
 ---
 
+
+**Pre-registration gate:** Before any receivable is registered, the pilot business 
+must independently complete a small sBTC acquisition via the official sBTC Bridge 
+(sbtc.stacks.co) — Bitcoin deposit txid and resulting sBTC mint logged with Stacks 
+Explorer links. If the business cannot complete this step, they are not onboarded 
+and we proceed to the fallback candidate.
+11:26 AM
+Working
+
+
+---
+
 ## Important Note
 
 This document is provided solely to demonstrate that pilot outreach is genuinely underway, not to assert that any agreement is in place.
