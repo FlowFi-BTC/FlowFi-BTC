@@ -64,13 +64,18 @@ Current status, as of September 20, 2026:
 
 ---
 
-
 **Pre-registration gate:** Before any receivable is registered, the pilot business
 must independently complete a small sBTC acquisition via the official sBTC Bridge
 (sbtc.stacks.co) — Bitcoin deposit txid and resulting sBTC mint logged with Stacks
 Explorer links. If the business cannot complete this step, they are not onboarded
 and we proceed to the fallback candidate.
 
+**This gate applies equally to the fallback candidate.** Uncle Tee's Schools is not
+exempted from this requirement simply because it is the second business approached — a
+school is not obviously more likely than a technology company to pass a bridge-capability
+test, and may be less likely to. If neither Open Hive nor Uncle Tee's Schools can complete
+this gate, that is reported as a blocked Milestone 3 dependency in `RISK_DISCLOSURE.md` §3,
+not resolved by quietly relaxing the requirement for whichever candidate remains.
 
 ---
 

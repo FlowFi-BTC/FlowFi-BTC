@@ -127,11 +127,16 @@ Stack: Clarinet SDK + Vitest (`FlowFi-BTC`, `npm run test`). **Milestone 1 test 
 
 | Test file | Tests | Status |
 |---|---|---|
-| `registry` (register/verify/receivable/cancel/mark-* auth) | 26 | ✅ Passing |
-| `escrow` (fund/release/repay/default + wrong-token/self-fund/double-spend guards) | 20 | ✅ Passing |
-| `integration` happy path (→ REPAID, conservation holds) | 1 | ✅ Passing |
-| `integration` default path (→ DEFAULTED, no funds move) | 1 | ✅ Passing |
-| **Total** | **46 (incl. 2 integration)** | **✅ 46/46 passing** |
+| `tests/registry.test.ts` | 26 | ✅ Passing |
+| `tests/escrow.test.ts` (includes 2 end-to-end integration paths, not additional to the 20) | 20 | ✅ Passing |
+| **Total** | **46** | **✅ 46/46 passing** |
+
+Within `escrow.test.ts`'s 20 tests, 2 are full end-to-end integration paths — (1) happy path:
+register → verify → register receivable → fund → release → repay → REPAID; (2) default path:
+register → verify → register receivable → fund → release → due date passes → mark-default →
+DEFAULTED. These are listed here for clarity, not as a separate count on top of the 20 — see
+`TECHNICAL_ARCHITECTURE.md`'s Test Infrastructure section, which describes the same suite with
+identical numbers.
 
 *Note: the original Milestone 1 target was 70+ tests (see `MILESTONE_PLAN.md`), including
 additional fuzz-style funding-math invariants and further boundary conditions. The current 46
@@ -153,7 +158,7 @@ remains tracked as open work before Milestone 1 close-out.*
 ## Sign-off
 
 **Reviewed by:** Oyewale Prudence ([@ProdevappOFFICIAL](https://github.com/ProdevappOFFICIAL))
-**Date:** 16 September 2026
+**Date:** [FILL IN THE ACTUAL DATE THIS REVIEW WAS COMPLETED — do not leave as a placeholder]
 **Contracts reviewed:** `flowfi-registry.clar` v1.0.0, `flowfi-escrow.clar` v1.0.0,
 `mock-sbtc-token.clar` v1.0.0 at testnet principals above.
 **Result:** All §1 authorization, §2 caller-boundary, §3 conservation, and §5 custody checks pass

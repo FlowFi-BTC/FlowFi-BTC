@@ -1,5 +1,13 @@
 # FlowFi BTC — Risk Disclosure
 
+**Platform philosophy, stated plainly:** FlowFi BTC does not eliminate counterparty risk. No
+financing platform — including a bank — can guarantee repayment. FlowFi BTC's role is to verify,
+disclose, and coordinate information around a real-world receivable so that an sBTC holder can
+make an informed funding decision. Credit risk belongs to the capital provider who chooses to
+fund a receivable; platform risk (whether the contract and verification process behave as
+documented) belongs to FlowFi BTC. This document exists to make that boundary explicit, not to
+imply a guarantee that does not exist.
+
 This document states plainly what FlowFi BTC's contracts (`flowfi-registry` v1.0.0,
 `flowfi-escrow` v1.0.0, `mock-sbtc-token` v1.0.0) do and do not guarantee. It is written to be
 read before funding any receivable, and reviewed before this project receives any grant funding.
@@ -59,10 +67,28 @@ the current mechanism's most significant real-world limitation.
 
 **Applied to the pilot specifically:** the primary pilot candidate, Open Hive Innovations Ltd, was
 selected partly because it is a technology-focused business and therefore has a more realistic chance
-of holding or acquiring sBTC than a business with no digital-asset experience. However, no formal
-evidence currently exists that Open Hive already holds sBTC or routinely acquires digital assets.
-**We estimate the probability of a mechanical default arising from conversion friction at
-approximately 20–30% for this pilot.**
+of holding or acquiring sBTC than a business with no digital-asset experience. Our original estimate,
+before any concrete mitigation existed, was **approximately 20–30% probability of a mechanical
+default** arising from conversion friction.
+
+**Update:** `PILOT_READINESS.md` now specifies a **pre-registration gate** — before any receivable is
+registered, the pilot business must independently complete a small sBTC acquisition via the official
+sBTC Bridge (sbtc.stacks.co), with the Bitcoin deposit txid and resulting sBTC mint logged with Stacks
+Explorer links. A business that cannot complete this step is not onboarded, and the fallback candidate
+is pursued instead. This gate directly tests the specific capability the 20–30% estimate was worried
+about, *before* any real receivable or capital is at risk, rather than discovering the answer only at
+the repayment deadline. We consider this a meaningful reduction to the estimate above, but have not
+assigned it a new number — the gate has not yet been run against a real candidate as of this writing,
+and we would rather report the outcome of actually running it than guess at a smaller-sounding figure
+in advance.
+
+**Open question, disclosed rather than resolved:** the fallback candidate, Uncle Tee's Schools, is a
+school, not a technology business — it is not obviously more likely than Open Hive to pass the same
+bridge gate, and may in fact be less likely to. If Open Hive fails the gate and Uncle Tee's Schools is
+then pursued, **the same gate applies to them as well** — this is not a gate that only exists for the
+primary candidate and quietly stops applying if we fall back. If neither candidate can pass it, that is
+reported honestly as a blocked Milestone 3 dependency, not worked around by relaxing the gate for
+whichever candidate is available at the time.
 
 We distinguish two different failure modes, and will report which one occurred rather than
 conflating them:
@@ -129,7 +155,8 @@ The pilot receivable may default rather than repay. **This is disclosed as a val
 (RC-9590869, primary) and Uncle Tee's Schools (RC-1917924, fallback). Both are at preliminary-interest
 stage; neither has been formally onboarded. See `PILOT_READINESS.md` for full detail.
 
-**Capital-provider side:** 30+ individuals approached via X direct messages (cumulative as of September 20, 2026). Before this update: 5 approached, 3 responded, 0 committed. **Update — September 20, 2026:** one individual has now expressed preliminary interest — [@Demihumanb](https://x.com/Demihumanb) (`SP2PZYA27E8MRBQHQXE0JQH5CHM9JJNM00YEMC4QJ`). No on-chain funding has occurred and no formal commitment has been executed. This remains the single largest open dependency for Milestone 3, and the 30:1 response ratio underscores its difficulty.
+**Capital-provider side:** 5 individuals approached via X direct message, 3 responded, 0 committed.
+This remains the single largest open dependency for Milestone 3.
 
 **No self-funding fallback exists.** Milestone 3's only success criterion is completion of an
 end-to-end financing cycle involving a real business and an **independent third-party sBTC capital
@@ -192,3 +219,27 @@ the application, was imprecise and has been corrected throughout. The accurate s
 given in Section 1 above: funds sit in a non-custodial escrow contract by design; no private key can
 redirect or withdraw them; the admin's power is limited to *timing* (when `release-funds` or
 `mark-default` is called), never *destination*.
+
+---
+
+## 11. Partial Funding ("Skin in the Game")
+
+`funding-amount` is a distinct field from `face-value` in `flowfi-registry`, and the contract does
+not require `funding-amount == face-value`. For the pilot, this will be used deliberately: the
+business will not receive 100% of the receivable's face value as an advance. Funding a meaningful
+portion (not the full amount) leaves the business with retained exposure to its own receivable,
+giving it an ongoing financial incentive to see the underlying invoice collected and the advance
+repaid, rather than treating the advance as free money. The exact percentage used for the pilot,
+and the business's retained share, will be stated in `PILOT_RESULT.md`. This is a disclosed design
+choice, not a claim that it prevents default — it reduces one incentive problem, nothing more.
+
+---
+
+## 12. Risk Information Shown Per Receivable
+
+Every receivable's public detail page shows a Risk Section, not just a verification badge — see
+`PAGES_SPEC.md`, Receivable Detail. It restates the boundaries in this document in the product
+itself (business verification status, whether the debtor is independently verified, that payment
+is not guaranteed, that fiat-to-sBTC conversion is required for repayment, and that funding may
+result in partial or total loss), so a capital provider encounters this disclosure before funding,
+not only if they separately read this file.
