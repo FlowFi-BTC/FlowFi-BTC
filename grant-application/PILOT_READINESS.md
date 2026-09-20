@@ -38,32 +38,38 @@ This document exists to show reviewers that Milestone 3 outreach is already unde
 
 Outreach to potential sBTC capital providers is ongoing and remains the largest dependency for Milestone 3.
 
-To date, outreach has focused on members of the Stacks and sBTC community via direct messages on X. **5 individuals have been approached, 3 have responded, and 0 have committed to participating.** Current conversations remain exploratory, focused on understanding the pilot structure, the responsibilities of a capital provider, and the risks of participating in an early-stage proof-of-concept transaction.
+Outreach has focused on members of the Stacks and sBTC community via direct messages on X (Twitter).
 
-No provider has been confirmed. There is no fallback that substitutes team or associated-party funds if one is not found — see `RISK_DISCLOSURE.md` §8 for why. If a provider is secured, the repository will include evidence of outreach and participation, and the final `PILOT_RESULT.md` will document the provider's role, public wallet address, and confirmation of independence from the project team.
+**Update — September 20, 2026:** After approaching **30+ Stacks community members** via X DMs, **one individual has expressed preliminary interest** in participating as the pilot capital provider:
+
+- **Stacks address (provided with consent):** `SP2PZYA27E8MRBQHQXE0JQH5CHM9JJNM00YEMC4QJ` — verifiable on [Stacks Explorer](https://explorer.hiro.so/address/SP2PZYA27E8MRBQHQXE0JQH5CHM9JJNM00YEMC4QJ?chain=testnet)
+- **X handle:** [@Demihumanb](https://x.com/Demihumanb) — initial contact was via X, followed by direct conversation
+- **Status:** preliminary interest expressed. No on-chain funding has occurred, no formal participation commitment has been executed, and no terms have been finalized.
+
+Before this update, 5 individuals had been approached, 3 had responded, and 0 had committed — that history is retained here for transparency. The 30+ figure above is the current cumulative total as of September 20, 2026. That this single positive response came after 30+ approaches underscores how difficult provider sourcing has been, and why the application treats an independent provider as the gating condition for Milestone 3 rather than an assumed outcome.
+
+There is no fallback that substitutes team or associated-party funds if an independent provider is not secured — see `RISK_DISCLOSURE.md` §8 for why. If a provider proceeds to fund the pilot, the repository will include evidence of outreach and participation, and the final `PILOT_RESULT.md` will document the provider's role, public wallet address, and confirmation of independence from the project team.
 
 ---
 
 ## Pilot Status
 
-Current status, as of this application:
+Current status, as of September 20, 2026:
 
 - MVP development in progress (contracts implemented and deployed to testnet — see [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md))
 - API and frontend integration built (see [APPLICATION_NARRATIVE.md](./APPLICATION_NARRATIVE.md) and [TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md))
 - Business-side outreach: two named, CAC-verifiable leads (Open Hive Innovations Ltd — primary, Uncle Tee's Schools — fallback), both at preliminary-interest stage
-- Capital-provider outreach: 5 approached via X DM, 3 responded, 0 committed
+- Capital-provider outreach (as of September 20, 2026): 30+ approached via X, 1 preliminary interest — [@Demihumanb](https://x.com/Demihumanb) (`SP2PZYA27E8MRBQHQXE0JQH5CHM9JJNM00YEMC4QJ`)
 - Final counterparty selection and formal onboarding scheduled for Milestone 3
 
 ---
 
 
-**Pre-registration gate:** Before any receivable is registered, the pilot business 
-must independently complete a small sBTC acquisition via the official sBTC Bridge 
-(sbtc.stacks.co) — Bitcoin deposit txid and resulting sBTC mint logged with Stacks 
-Explorer links. If the business cannot complete this step, they are not onboarded 
+**Pre-registration gate:** Before any receivable is registered, the pilot business
+must independently complete a small sBTC acquisition via the official sBTC Bridge
+(sbtc.stacks.co) — Bitcoin deposit txid and resulting sBTC mint logged with Stacks
+Explorer links. If the business cannot complete this step, they are not onboarded
 and we proceed to the fallback candidate.
-11:26 AM
-Working
 
 
 ---

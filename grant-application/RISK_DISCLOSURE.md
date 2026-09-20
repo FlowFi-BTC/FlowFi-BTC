@@ -129,8 +129,7 @@ The pilot receivable may default rather than repay. **This is disclosed as a val
 (RC-9590869, primary) and Uncle Tee's Schools (RC-1917924, fallback). Both are at preliminary-interest
 stage; neither has been formally onboarded. See `PILOT_READINESS.md` for full detail.
 
-**Capital-provider side:** 5 individuals approached via X direct message, 3 responded, 0 committed.
-This remains the single largest open dependency for Milestone 3.
+**Capital-provider side:** 30+ individuals approached via X direct messages (cumulative as of September 20, 2026). Before this update: 5 approached, 3 responded, 0 committed. **Update — September 20, 2026:** one individual has now expressed preliminary interest — [@Demihumanb](https://x.com/Demihumanb) (`SP2PZYA27E8MRBQHQXE0JQH5CHM9JJNM00YEMC4QJ`). No on-chain funding has occurred and no formal commitment has been executed. This remains the single largest open dependency for Milestone 3, and the 30:1 response ratio underscores its difficulty.
 
 **No self-funding fallback exists.** Milestone 3's only success criterion is completion of an
 end-to-end financing cycle involving a real business and an **independent third-party sBTC capital

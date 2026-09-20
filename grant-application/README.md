@@ -2,6 +2,8 @@
 
 ## Getting Started Program Track
 
+> **Update — September 20, 2026:** After 30+ Stacks community members approached via X, one capital provider has expressed preliminary interest — [@Demihumanb](https://x.com/Demihumanb) (`SP2PZYA27E8MRBQHQXE0JQH5CHM9JJNM00YEMC4QJ`). Preliminary interest only; no commitment or funding has occurred. See [PILOT_READINESS.md](./PILOT_READINESS.md).
+
 ---
 
 ## Document Index
@@ -30,7 +32,7 @@
 | **Track** | Getting Started Program |
 | **Funding Request** | $10,000 |
 | **Timeline** | ~12 weeks (3 milestones); M1 by Oct 25 2026, M2 by Nov 22 2026, M3 by Dec 20 2026 — see `MILESTONE_PLAN.md` |
-| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite completed (46/46 passing tests: 26 registry + 20 escrow, including 2 full integration paths); **2 business counterparties identified for Milestone 3 — see [PILOT_READINESS.md](./PILOT_READINESS.md)** |
+| **Current Status** | Contracts implemented (`flowfi-registry.clar` v1.0.0 + `flowfi-escrow.clar` v1.0.0 + `mock-sbtc-token.clar` v1.0.0), deployed to Stacks **testnet** (see Live Deployments below); frontend live; test suite completed (46/46 passing tests: 26 registry + 20 escrow, including 2 full integration paths); **2 business counterparties + 1 capital provider with preliminary interest identified for Milestone 3 as of September 20, 2026 — see [PILOT_READINESS.md](./PILOT_READINESS.md)** |
 | **Key Technology** | Clarity 3, sBTC (SIP-010, structural trait), Stacks Connect, two-contract architecture (`flowfi-registry` owns state, `flowfi-escrow` owns money) |
 | **Frontend (live)** | https://flowfi-btc.vercel.app/ |
 

@@ -2,6 +2,8 @@
 
 ## Stacks Endowment: Getting Started Program Track
 
+> **Update — September 20, 2026:** Capital-provider outreach, the project's largest open dependency, has its first provider-side signal — after 30+ X outreach attempts, [@Demihumanb](https://x.com/Demihumanb) (`SP2PZYA27E8MRBQHQXE0JQH5CHM9JJNM00YEMC4QJ`) has expressed preliminary interest (pre-commitment, pre-funding). See [PILOT_READINESS.md](./PILOT_READINESS.md) for full detail and [RISK_DISCLOSURE.md §8](./RISK_DISCLOSURE.md) for the unchanged risk framing.
+
 ---
 
 ## Project Name
